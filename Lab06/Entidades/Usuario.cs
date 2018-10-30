@@ -17,4 +17,14 @@ namespace Business.Entities
         public string Clave { get => _Clave; set => _Clave = value; }
         public bool Habilitado { get => _Habilitado; set => _Habilitado = value; }
     }
+
+    public enum FormModes
+    {
+        Alta,
+        Baja,
+        Modificacion
+    }
+
+
+
 }

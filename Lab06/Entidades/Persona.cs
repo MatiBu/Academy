@@ -34,5 +34,7 @@ namespace Business.Entities
             Usuario,
             Docente
         }
+
+        
     }
 }
