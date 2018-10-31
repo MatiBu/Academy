@@ -86,7 +86,7 @@ namespace UI.Web
             this.gridView.DataBind();
         }      
 
-        protected void gridView_SelectedIndexChanged1(object sender, EventArgs e)
+        protected void gridView_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.SelectID = (int)this.gridView.SelectedValue;
         }

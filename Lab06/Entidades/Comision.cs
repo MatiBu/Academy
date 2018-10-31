@@ -8,12 +8,12 @@ namespace Business.Entities
 {
     public class Comision : BusinessEntity
     {
-        private int _AnioEspecialidad;
+        private DateTime _AnioEspecialidad;
         private string _Descripcion;
         private int _IDPlan;
 
         public int IDPlan { get => _IDPlan; set => _IDPlan = value; }
         public string Descripcion { get => _Descripcion; set => _Descripcion = value; }
-        public int AnioEspecialidad { get => _AnioEspecialidad; set => _AnioEspecialidad = value; }
+        public DateTime AnioEspecialidad { get => _AnioEspecialidad; set => _AnioEspecialidad = value; }
     }
 }
