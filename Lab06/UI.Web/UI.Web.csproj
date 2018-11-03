@@ -67,18 +67,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Default.aspx" />
-    <Content Include="Usuarios.aspx" />
+    <Content Include="frmABMUsuarios.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -92,12 +84,12 @@
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
-    <Compile Include="Usuarios.aspx.cs">
-      <DependentUpon>Usuarios.aspx</DependentUpon>
+    <Compile Include="frmABMUsuarios.aspx.cs">
+      <DependentUpon>frmABMUsuarios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Usuarios.aspx.designer.cs">
-      <DependentUpon>Usuarios.aspx</DependentUpon>
+    <Compile Include="frmABMUsuarios.aspx.designer.cs">
+      <DependentUpon>frmABMUsuarios.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
