@@ -10,7 +10,7 @@
 namespace UI.Web {
     
     
-    public partial class Usuarios {
+    public partial class frmAlumnos {
         
         /// <summary>
         /// form1 control.
@@ -58,13 +58,13 @@ namespace UI.Web {
         protected global::System.Web.UI.WebControls.Button btnBuscar;
         
         /// <summary>
-        /// grvUsuarios control.
+        /// grvAlumnos control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grvUsuarios;
+        protected global::System.Web.UI.WebControls.GridView grvAlumnos;
         
         /// <summary>
         /// lblNombre control.

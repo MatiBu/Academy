@@ -1,5 +1,5 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"
-    CodeBehind="frmABMUsuarios.aspx.cs" Inherits="UI.Web.Usuarios" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" 
+    CodeBehind="frmABMProfesores.aspx.cs" Inherits="UI.Web.frmABMProfesores" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Usuarios</title>
@@ -19,7 +19,7 @@
                 <asp:Button ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
                 <br />
                 <br />
-                <asp:GridView ID="grvUsuarios" runat="server" AutoGenerateColumns="False"
+                <asp:GridView ID="grvDocentes" runat="server" AutoGenerateColumns="False"
                     OnSelectedIndexChanged="grvUsuarios_SelectedIndexChanged"
                     
                     DataKeyNames="ID">
@@ -70,3 +70,4 @@
         <br />      
     </form>
 </asp:Content>
+

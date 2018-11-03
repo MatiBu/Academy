@@ -66,6 +66,7 @@ namespace UI.Web
         {
             if(!IsPostBack)
             {
+                InhabilitarControles();
                 LoadGrid();
             }
         }
@@ -82,13 +83,131 @@ namespace UI.Web
 
         public void LoadGrid()
         {
-            this.gridView.DataSource = this.Logic.GetAll();
-            this.gridView.DataBind();
-        }      
+            this.grvUsuarios.DataSource = this.Logic.GetAll();            
+            this.grvUsuarios.DataBind();
+        }       
 
-        protected void gridView_SelectedIndexChanged(object sender, EventArgs e)
+        protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            this.SelectID = (int)this.gridView.SelectedValue;
+            foreach (GridViewRow row in grvUsuarios.Rows)
+            {
+                for (int i = 1; i <= 11; i++)
+                {
+                    TextBox txt = row.FindControl(string.Format("TextBox{0}", i)) as TextBox;
+                    if ((txt != null) && (txt.Text == txtBuscar.Text))
+                    {
+                        row.BackColor = System.Drawing.Color.Red;
+                        grvUsuarios.DataBind();
+                    }
+                }
+
+            }
         }
+
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+            HabilitarControles();
+            if(txtApellido.Enabled == true)
+            {
+                Usuario usuario = new Usuario();
+                //usuario.State = BusinessEntity.States.Modified;
+                UsuarioLogic guardarUsuario = new UsuarioLogic();
+                ControlAObjetos(usuario);
+                this.Logic.Insert(usuario);                
+                LimpiarControles();
+                LoadGrid();
+            }
+        }
+
+        protected void btnGuardar_Click(object sender, EventArgs e)
+        {            
+            Usuario usuario = new Usuario();
+            //usuario.State = BusinessEntity.States.Modified;
+            
+            ControlAObjetos(usuario);
+            this.Logic.Save(usuario);
+            LimpiarControles();
+            LoadGrid();
+        }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+            Usuario usuario = new Usuario();            
+            usuario.ID = int.Parse(grvUsuarios.SelectedRow.Cells[1].Text);
+            usuario.State = BusinessEntity.States.Deleted;
+            this.Logic.Delete(usuario.ID);
+            LimpiarControles();
+            LoadGrid();
+        }
+
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            LimpiarControles();
+        }
+
+        protected void grvUsuarios_SelectedIndexChanged(object sender, EventArgs e)
+        {            
+            Usuario usuario = new Usuario();
+            var id = int.Parse(grvUsuarios.SelectedRow.Cells[1].Text);
+            usuario = this.Logic.GetOne(id);
+            ObjetosAControl(usuario);
+        }
+
+        public void ObjetosAControl(Usuario usuario)
+        {
+            txtNombre.Text = usuario.Nombre;
+            txtApellido.Text = usuario.Apellido;
+            txtEmail.Text = usuario.EMail;
+            txtNombreUsuario.Text = usuario.NombreUsuario;
+            cbHabilitado.Checked = usuario.Habilitado;
+            txtClave.Text = usuario.Clave;
+            txtRepetirClave.Text = usuario.Clave;
+        }
+
+        public void ControlAObjetos(Usuario usuario)
+        {            
+            usuario.Nombre = txtNombre.Text;
+            usuario.Apellido = txtApellido.Text;
+            usuario.EMail = txtEmail.Text;
+            usuario.NombreUsuario = txtNombreUsuario.Text;
+            usuario.Habilitado = cbHabilitado.Checked;
+            usuario.Clave = txtClave.Text;
+        }
+
+        public void InhabilitarControles()
+        {
+            txtNombre.Enabled = false;
+            txtApellido.Enabled = false;
+            txtEmail.Enabled = false;
+            txtNombreUsuario.Enabled = false;
+            cbHabilitado.Enabled = false;
+            txtClave.Enabled = false;
+            txtRepetirClave.Enabled = false;
+        }
+
+        public void HabilitarControles()
+        {
+            txtNombre.Enabled = true;
+            txtApellido.Enabled = true;
+            txtEmail.Enabled = true;
+            txtNombreUsuario.Enabled = true;
+            cbHabilitado.Enabled = true;
+            txtClave.Enabled = true;
+            txtRepetirClave.Enabled = true;
+        }
+
+        public void LimpiarControles()
+        {
+            txtNombre.Text = "";
+            txtApellido.Text = "";
+            txtEmail.Text = "";
+            txtNombreUsuario.Text = "";
+            cbHabilitado.Text = "";
+            txtClave.Text = "";
+            txtRepetirClave.Text = "";
+            cbHabilitado.Checked = false;
+        }
+
+        
     }
 }

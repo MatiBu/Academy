@@ -1,14 +1,12 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"
-    CodeBehind="frmABMUsuarios.aspx.cs" Inherits="UI.Web.Usuarios" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"
+    CodeBehind="frmABMAlumnos.aspx.cs" Inherits="UI.Web.frmAlumnos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Usuarios</title>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="bodyContentPlaceHolder" runat="server">
 
-
-    <form id="form1" runat="server">
-
+     <form id="form1" runat="server">
 
         <asp:Panel ID="formPanel" runat="server">
             <div id="buscar">
@@ -19,8 +17,8 @@
                 <asp:Button ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
                 <br />
                 <br />
-                <asp:GridView ID="grvUsuarios" runat="server" AutoGenerateColumns="False"
-                    OnSelectedIndexChanged="grvUsuarios_SelectedIndexChanged"
+                <asp:GridView ID="grvAlumnos" runat="server" AutoGenerateColumns="False"
+                    OnSelectedIndexChanged="grvAlumnos_SelectedIndexChanged"
                     
                     DataKeyNames="ID">
                     <Columns>                        
@@ -67,6 +65,8 @@
             <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" />
             <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />
         </div>
-        <br />      
+        <br />
+
     </form>
+
 </asp:Content>

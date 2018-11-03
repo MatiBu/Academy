@@ -101,7 +101,7 @@ namespace Data.Database
         public Usuario GetOne(int ID)
         {
             //return Usuarios.Find(delegate (Usuario u) { return u.ID == ID; });
-            Usuario usr = new Usuario();
+            Usuario usr = new Usuario();            
             try
             {
                 this.OpenConnection();
@@ -177,7 +177,7 @@ namespace Data.Database
                 cmdUsuario.Parameters.Add("@nombre", SqlDbType.VarChar, 50).Value = usuario.Nombre;
                 cmdUsuario.Parameters.Add("@apellido", SqlDbType.VarChar, 50).Value = usuario.Apellido;
                 cmdUsuario.Parameters.Add("@email", SqlDbType.VarChar, 50).Value = usuario.EMail;
-                cmdUsuario.Parameters.Add("@id_persona", SqlDbType.Int).Value = id_persona;
+                cmdUsuario.Parameters.Add("@id_persona", SqlDbType.Int).Value = usuario.ID;
                 cmdUsuario.ExecuteNonQuery();
             }
             catch (Exception Ex)
@@ -191,7 +191,7 @@ namespace Data.Database
             }
         }
 
-        protected void Insert(Usuario usuario)
+        public void Insert(Usuario usuario)
         {
             try
             {
@@ -228,22 +228,16 @@ namespace Data.Database
         }
 
         public void Save(Usuario usuario)
-        {
-            if (usuario.State == BusinessEntity.States.New)
-            {
-                this.Insert(usuario);
-            }
-            else if (usuario.State == BusinessEntity.States.Deleted)
-            {
-                this.Delete(usuario.ID);
-            }
-            else if (usuario.State == BusinessEntity.States.Modified)
-            {
+        {  
                 // Usuarios[Usuarios.FindIndex(delegate (Usuario u) { return u.ID == usuario.ID; })] = usuario;
                 this.Update(usuario);
-            }
-            usuario.State = BusinessEntity.States.Unmodified;
+            
         }
+
+        //public void Insert(Usuario user)
+        //{
+        //    this.Insert(user);
+        //}
 
         public List<ModuloUsuario> GetModulesByUser(int ID)
         {
