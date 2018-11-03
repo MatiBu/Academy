@@ -46,5 +46,10 @@ namespace Business.Logic
             UsuarioData.Delete(ID);
         }
 
+        public List<ModuloUsuario> GetModulesByUser(int ID)
+        {
+            return UsuarioData.GetModulesByUser(ID);
+        }
+
     }
 }

@@ -17,16 +17,44 @@ namespace UI.Desktop
         public UsuarioDesktop()
         {
             InitializeComponent();
+            this.moduleGrid.AutoGenerateColumns = false;
         }
         public UsuarioDesktop(ModoForm modo) : this()
         {
             Modo = modo;
+            var modulo = new ModuloLogic();
+            this.moduleGrid.DataSource = modulo.GetAll();
         }
         public UsuarioDesktop(int ID, ModoForm modo) : this()
         {
             Modo = modo;
             var usuario = new UsuarioLogic();
+            var modulo = new ModuloLogic();
             UsuarioActual = usuario.GetOne(ID);
+            List<ModuleByUser> newLista = new List<ModuleByUser>();
+            var dataDeModulos = modulo.GetAll();
+            var dataDeModulosPorUser = usuario.GetModulesByUser(ID);
+            foreach (var module in dataDeModulos)
+            {
+                var index = dataDeModulosPorUser.FindIndex(m => m.IdModulo == module.ID);
+                if (index >= 0)
+                {
+                    var newRow = new ModuleByUser
+                    {
+                        Descripcion = module.Descripcion,
+                        PermiteAlta = dataDeModulosPorUser[index].PermiteAlta,
+                        PermiteBaja = dataDeModulosPorUser[index].PermiteBaja,
+                        PermiteModificacion = dataDeModulosPorUser[index].PermiteModificacion
+                    };
+                    newLista.Add(newRow);
+                }
+                else
+                {
+                    var newRow = new ModuleByUser { Descripcion = module.Descripcion };
+                    newLista.Add(newRow);
+                }
+            }
+            this.moduleGrid.DataSource = newLista;
             MapearDeDatos();
         }
 
@@ -125,5 +153,29 @@ namespace UI.Desktop
         {
             Close();
         }
+
+        private void tlUsuario_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+
+    public class ModuleByUser
+    {
+        private string _Descripcion;
+        private Boolean _PermiteAlta;
+        private Boolean _PermiteBaja;
+        private Boolean _PermiteModificacion;
+
+        public string Descripcion { get => _Descripcion; set => _Descripcion = value; }
+        public Boolean PermiteAlta { get => _PermiteAlta; set => _PermiteAlta = value; }
+        public Boolean PermiteBaja { get => _PermiteBaja; set => _PermiteBaja = value; }
+        public Boolean PermiteModificacion { get => _PermiteModificacion; set => _PermiteModificacion = value; }
+
     }
 }
