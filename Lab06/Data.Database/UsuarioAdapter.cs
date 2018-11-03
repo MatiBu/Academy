@@ -98,8 +98,7 @@ namespace Data.Database
             return usuarios;
         }
 
-
-        public Business.Entities.Usuario GetOne(int ID)
+        public Usuario GetOne(int ID)
         {
             //return Usuarios.Find(delegate (Usuario u) { return u.ID == ID; });
             Usuario usr = new Usuario();
@@ -279,6 +278,42 @@ namespace Data.Database
                 this.CloseConnection();
             }
             return usuarios;
+        }
+
+        public Usuario Login(Usuario usuario)
+        {
+            Usuario usr = new Usuario();
+            try
+            {
+                this.OpenConnection();
+                SqlCommand cmdLogin = new SqlCommand("SELECT * FROM usuarios u " +
+                    "LEFT JOIN personas p ON p.id_persona = u.id_persona " +
+                    "WHERE u.nombre_usuario = @nombre_usuario AND u.clave = @clave;", sqlConn);
+                cmdLogin.Parameters.Add("@nombre_usuario", SqlDbType.VarChar, 50).Value = usuario.NombreUsuario;
+                cmdLogin.Parameters.Add("@clave", SqlDbType.VarChar, 50).Value = usuario.Clave;
+                SqlDataReader loginReader = cmdLogin.ExecuteReader();
+                if (loginReader.Read())
+                {
+                    usr.ID = (int)loginReader["id_usuario"];
+                    usr.NombreUsuario = (string)loginReader["nombre_usuario"];
+                    usr.Clave = (string)loginReader["clave"];
+                    usr.Habilitado = (Boolean)loginReader["habilitado"];
+                    usr.Nombre = (string)loginReader["nombre"];
+                    usr.Apellido = (string)loginReader["apellido"];
+                    usr.EMail = (string)loginReader["email"];
+                }
+                loginReader.Close();
+            }
+            catch (Exception Ex)
+            {
+                Exception ExcepcionManejada = new Exception("Error al modificar datos de un usuario", Ex);
+                throw ExcepcionManejada;
+            }
+            finally
+            {
+                this.CloseConnection();
+            }
+            return usr;
         }
     }
 }
