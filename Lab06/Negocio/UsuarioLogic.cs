@@ -10,7 +10,7 @@ namespace Business.Logic
 {
     public class UsuarioLogic : BusinessLogic
     {
-        private UsuarioAdapter UsuarioData;        
+        private UsuarioAdapter UsuarioData;
 
         public UsuarioLogic()
         {
@@ -44,6 +44,16 @@ namespace Business.Logic
         public void Delete(int ID)
         {
             UsuarioData.Delete(ID);
+        }
+
+        public List<ModuloUsuario> GetModulesByUser(int ID)
+        {
+            return UsuarioData.GetModulesByUser(ID);
+        }
+
+        public Usuario Login(Usuario usuario)
+        {
+            return UsuarioData.Login(usuario);
         }
 
     }
