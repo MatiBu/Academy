@@ -111,13 +111,10 @@ namespace Data.Database
                 SqlDataReader drDocenteCurso = cmdUsuario.ExecuteReader();
                 if (drDocenteCurso.Read())
                 {
-
                     docente.Dictado = (int)drDocenteCurso["id_dictado"];
                     docente.IDCurso = (int)drDocenteCurso["id_curso"];
                     docente.IDDocente = (int)drDocenteCurso["id_docente"];
                     docente.Cargo = (int)drDocenteCurso["cargo"];
-
-
                 }
                 drDocenteCurso.Close();
             }

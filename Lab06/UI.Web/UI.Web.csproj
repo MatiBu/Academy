@@ -67,17 +67,105 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Default.aspx" />
-    <Content Include="Usuarios.aspx" />
+    <Content Include="frmABMComisiones.aspx" />
+    <Content Include="frmABMCursos.aspx" />
+    <Content Include="frmABMEspeciialidades.aspx" />
+    <Content Include="frmABMMaterias.aspx" />
+    <Content Include="frmABMPlanes.aspx" />
+    <Content Include="frmABMProfesores.aspx" />
+    <Content Include="frmABMUsuarios.aspx" />
+    <Content Include="frmABMAlumnos.aspx" />
+    <Content Include="frmInscripcionACursos.aspx" />
+    <Content Include="frmRegistroNotas.aspx" />
+    <Content Include="frmReporteCursos.aspx" />
+    <Content Include="frmReporteMejoresPromedios.aspx" />
+    <Content Include="frmReportePlanes.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="frmABMAlumnos.aspx.cs">
+      <DependentUpon>frmABMAlumnos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="frmABMAlumnos.aspx.designer.cs">
+      <DependentUpon>frmABMAlumnos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmABMComisiones.aspx.cs">
+      <DependentUpon>frmABMComisiones.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmABMComisiones.aspx.designer.cs">
+      <DependentUpon>frmABMComisiones.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmABMCursos.aspx.cs">
+      <DependentUpon>frmABMCursos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmABMCursos.aspx.designer.cs">
+      <DependentUpon>frmABMCursos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmABMEspeciialidades.aspx.cs">
+      <DependentUpon>frmABMEspeciialidades.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmABMEspeciialidades.aspx.designer.cs">
+      <DependentUpon>frmABMEspeciialidades.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmABMMaterias.aspx.cs">
+      <DependentUpon>frmABMMaterias.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmABMMaterias.aspx.designer.cs">
+      <DependentUpon>frmABMMaterias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmABMPlanes.aspx.cs">
+      <DependentUpon>frmABMPlanes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmABMPlanes.aspx.designer.cs">
+      <DependentUpon>frmABMPlanes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmABMProfesores.aspx.cs">
+      <DependentUpon>frmABMProfesores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmABMProfesores.aspx.designer.cs">
+      <DependentUpon>frmABMProfesores.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmInscripcionACursos.aspx.cs">
+      <DependentUpon>frmInscripcionACursos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmInscripcionACursos.aspx.designer.cs">
+      <DependentUpon>frmInscripcionACursos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmRegistroNotas.aspx.cs">
+      <DependentUpon>frmRegistroNotas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmRegistroNotas.aspx.designer.cs">
+      <DependentUpon>frmRegistroNotas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmReporteCursos.aspx.cs">
+      <DependentUpon>frmReporteCursos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmReporteCursos.aspx.designer.cs">
+      <DependentUpon>frmReporteCursos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmReporteMejoresPromedios.aspx.cs">
+      <DependentUpon>frmReporteMejoresPromedios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmReporteMejoresPromedios.aspx.designer.cs">
+      <DependentUpon>frmReporteMejoresPromedios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="frmReportePlanes.aspx.cs">
+      <DependentUpon>frmReportePlanes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="frmReportePlanes.aspx.designer.cs">
+      <DependentUpon>frmReportePlanes.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -92,12 +180,12 @@
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
-    <Compile Include="Usuarios.aspx.cs">
-      <DependentUpon>Usuarios.aspx</DependentUpon>
+    <Compile Include="frmABMUsuarios.aspx.cs">
+      <DependentUpon>frmABMUsuarios.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Usuarios.aspx.designer.cs">
-      <DependentUpon>Usuarios.aspx</DependentUpon>
+    <Compile Include="frmABMUsuarios.aspx.designer.cs">
+      <DependentUpon>frmABMUsuarios.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
