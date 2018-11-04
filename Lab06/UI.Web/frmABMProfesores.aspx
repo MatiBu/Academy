@@ -20,7 +20,7 @@
                 <br />
                 <br />
                 <asp:GridView ID="grvDocentes" runat="server" AutoGenerateColumns="False"
-                    OnSelectedIndexChanged="grvUsuarios_SelectedIndexChanged"
+                    OnSelectedIndexChanged="grvDocentes_SelectedIndexChanged"
                     
                     DataKeyNames="ID">
                     <Columns>                        

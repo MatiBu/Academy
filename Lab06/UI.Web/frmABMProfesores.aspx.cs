@@ -11,6 +11,7 @@ namespace UI.Web
 {
     public partial class frmABMProfesores : System.Web.UI.Page
     {
+        DocenteCursoLogic _logic;
         private UsuarioLogic Logic
         {
             get
@@ -19,7 +20,7 @@ namespace UI.Web
                 {
                     _logic = new DocenteCursoLogic();
                 }
-                return _logic;
+                return Logic;
             }
         }
 
@@ -91,6 +92,23 @@ namespace UI.Web
             txtClave.Text = "";
             txtRepetirClave.Text = "";
             cbHabilitado.Checked = false;
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            foreach (GridViewRow row in grvDocentes.Rows)
+            {
+                for (int i = 1; i <= 11; i++)
+                {
+                    TextBox txt = row.FindControl(string.Format("TextBox{0}", i)) as TextBox;
+                    if ((txt != null) && (txt.Text == txtBuscar.Text))
+                    {
+                        row.BackColor = System.Drawing.Color.Red;
+                        grvDocentes.DataBind();
+                    }
+                }
+
+            }
         }
     }
 }
