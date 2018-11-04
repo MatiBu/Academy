@@ -6,10 +6,11 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="bodyContentPlaceHolder" runat="server">
 
-     <form id="form1" runat="server">
+    <form id="form1" runat="server">
 
         <asp:Panel ID="formPanel" runat="server">
             <div id="buscar">
+
                 <asp:Label ID="lblBuscar" runat="server" Text="Buscar por Nombre de Usuario"></asp:Label>
                 <asp:TextBox ID="txtBuscar" runat="server"></asp:TextBox>
                 <br />
@@ -19,9 +20,8 @@
                 <br />
                 <asp:GridView ID="grvAlumnos" runat="server" AutoGenerateColumns="False"
                     OnSelectedIndexChanged="grvAlumnos_SelectedIndexChanged"
-                    
                     DataKeyNames="ID">
-                    <Columns>                        
+                    <Columns>
                         <asp:CommandField ShowSelectButton="True" />
                         <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                         <asp:BoundField DataField="NombreUsuario" HeaderText="NombreUsuario" SortExpression="NombreUsuario" />
@@ -29,12 +29,12 @@
                         <asp:CheckBoxField DataField="Habilitado" HeaderText="Habilitado" SortExpression="Habilitado" />
                         <asp:BoundField DataField="Apellido" HeaderText="Apellido" SortExpression="Apellido" />
                         <asp:BoundField DataField="EMail" HeaderText="EMail" SortExpression="EMail" />
-                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />                        
+                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
                     </Columns>
                 </asp:GridView>
                 <br />
                 <br />
-            </div>         
+            </div>
         </asp:Panel>
         <div>
             <asp:Label ID="lblNombre" runat="server" Text="Nombre: "></asp:Label>
