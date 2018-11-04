@@ -11,8 +11,9 @@ namespace UI.Web
 {
     public partial class frmABMProfesores : System.Web.UI.Page
     {
-        DocenteCursoLogic _logic;
-        private UsuarioLogic Logic
+        private DocenteCursoLogic _logic;
+        
+        private DocenteCursoLogic Logic
         {
             get
             {
@@ -20,7 +21,7 @@ namespace UI.Web
                 {
                     _logic = new DocenteCursoLogic();
                 }
-                return Logic;
+                return _logic;
             }
         }
 
