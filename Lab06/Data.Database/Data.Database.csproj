@@ -61,6 +61,8 @@
     <Compile Include="Adapter.cs" />
     <Compile Include="AlumnoInscripcionesAdapter.cs" />
     <Compile Include="ComisionAdapter.cs" />
+    <Compile Include="CursoAdapter.cs" />
+    <Compile Include="DocenteAdapter.cs" />
     <Compile Include="DocenteCursoAdapter.cs" />
     <Compile Include="EspecialidadAdapter.cs" />
     <Compile Include="PlanAdapter.cs" />
