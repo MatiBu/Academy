@@ -8,5 +8,8 @@ namespace Business.Entities
 {
     public class Alumno: Usuario
     {
+        private int _IDEspecialidad;
+
+        public int IDEspecialidad { get => _IDEspecialidad; set => _IDEspecialidad = value; }
     }
 }

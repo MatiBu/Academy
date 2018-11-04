@@ -29,7 +29,7 @@ namespace Data.Database
 
                     planes.Add(plan);
                 }
-                this.CloseConnection();
+                drPlanes.Close();
             }
             catch (Exception Ex)
             {

@@ -32,7 +32,7 @@ namespace Data.Database
 
                     alumnoInscripciones.Add(usr);
                 }
-                this.CloseConnection();
+                drAlumnoInscripciones.Close();
             }
             catch (Exception Ex)
             {
@@ -67,7 +67,7 @@ namespace Data.Database
                     usr.IDCurso = (int)drAlumnoInscripciones["id_curso"];
                     usr.Nota = (int)drAlumnoInscripciones["nota"];
                 }
-                this.CloseConnection();
+                drAlumnoInscripciones.Close();
             }
             catch (Exception Ex)
             {

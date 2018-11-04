@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Business.Entities;
 using System.Data;
 using System.Data.SqlClient;
@@ -141,8 +140,16 @@ namespace Data.Database
             {
                 this.OpenConnection();
 
-                SqlCommand cmdDelete = new SqlCommand("delete usuarios where id_usuario = @id", sqlConn);
+                SqlCommand cmdDelete = new SqlCommand("select id_persona from usuarios where id_usuario = @id", sqlConn);
                 cmdDelete.Parameters.Add("@id", SqlDbType.Int).Value = ID;
+                var id_persona = cmdDelete.ExecuteScalar();
+
+                cmdDelete.CommandText = "delete usuarios where id_usuario = @id";
+                cmdDelete.ExecuteNonQuery();
+                cmdDelete.Parameters.Clear();
+
+                cmdDelete.CommandText = "delete personas where id_persona = @id";
+                cmdDelete.Parameters.Add("@id", SqlDbType.Int).Value = id_persona;
                 cmdDelete.ExecuteNonQuery();
 
             }

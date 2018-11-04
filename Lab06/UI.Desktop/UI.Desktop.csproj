@@ -63,11 +63,23 @@
     <Compile Include="Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
+    <Compile Include="AlumnosDesktop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AlumnosDesktop.Designer.cs">
+      <DependentUpon>AlumnosDesktop.cs</DependentUpon>
+    </Compile>
     <Compile Include="UsuarioDesktop.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UsuarioDesktop.Designer.cs">
       <DependentUpon>UsuarioDesktop.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Alumnos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Alumnos.Designer.cs">
+      <DependentUpon>Alumnos.cs</DependentUpon>
     </Compile>
     <Compile Include="Usuarios.cs">
       <SubType>Form</SubType>
@@ -83,8 +95,14 @@
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AlumnosDesktop.resx">
+      <DependentUpon>AlumnosDesktop.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UsuarioDesktop.resx">
       <DependentUpon>UsuarioDesktop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Alumnos.resx">
+      <DependentUpon>Alumnos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Usuarios.resx">
       <DependentUpon>Usuarios.cs</DependentUpon>
@@ -110,7 +128,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Entidades\Business.Entities.csproj">

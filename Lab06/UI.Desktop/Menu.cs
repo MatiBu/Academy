@@ -33,5 +33,11 @@ namespace UI.Desktop
             var adminUsuarios = new Usuarios();
             adminUsuarios.ShowDialog();
         }
+
+        private void linkLabel2_Click(object sender, EventArgs e)
+        {
+            var adminAlumnos = new Alumnos();
+            adminAlumnos.ShowDialog();
+        }
     }
 }

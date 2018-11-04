@@ -64,8 +64,6 @@ namespace Data.Database
                     comision.IDPlan = (int)drComision["id_plan"];
                     comision.Descripcion = (string)drComision["desc_comision"];
                     comision.AnioEspecialidad = (DateTime)drComision["anio_especialidad"];
-
-
                 }
                 drComision.Close();
             }

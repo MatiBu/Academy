@@ -2,39 +2,35 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Business.Entities;
+using static Business.Entities.Persona;
 
 namespace Data.Database
 {
     public class AlumnoAdapter : Adapter
     {
-
         public List<Alumno> GetAll()
         {
-            // return new List<Alumno>(Alumnos);
             List<Alumno> alumnos = new List<Alumno>();
             try
             {
                 this.OpenConnection();
-                SqlCommand cmdAlumnos = new SqlCommand("select * from personas where tipo_persona = 3", sqlConn);
+                SqlCommand cmdAlumnos = new SqlCommand("select p.id_persona, p.legajo, p.nombre, p.apellido, p.email, " +
+                    "p.direccion, p.telefono, p.fecha_nac, p.id_plan " +
+                    "from personas p where p.tipo_persona = @tipo_alumno", sqlConn);
+                cmdAlumnos.Parameters.Add("@tipo_alumno", SqlDbType.Int).Value = (int)TipoPersonas.Alumno;
                 SqlDataReader drAlumnos = cmdAlumnos.ExecuteReader();
                 while (drAlumnos.Read())
                 {
                     Alumno alum = new Alumno();
                     alum.ID = (int)drAlumnos["id_persona"];
                     alum.Legajo = (int)drAlumnos["legajo"];
-                    alum.Clave = (string)drAlumnos["clave"];
-                    alum.Habilitado = (Boolean)drAlumnos["habilitado"];
                     alum.Nombre = (string)drAlumnos["nombre"];
                     alum.Apellido = (string)drAlumnos["apellido"];
                     alum.EMail = (string)drAlumnos["email"];
                     alum.Direccion = (string)drAlumnos["direccion"];
                     alum.Telefono = (string)drAlumnos["telefono"];
-                    alum.NombreUsuario = (string)drAlumnos["nombre_usuario"];
-                    alum.FechaNacimiento  = (DateTime)drAlumnos["fecha_nac"];
+                    alum.FechaNacimiento = (DateTime)drAlumnos["fecha_nac"];
                     alum.IDPlan = (int)drAlumnos["id_plan"];
 
                     alumnos.Add(alum);
@@ -61,18 +57,22 @@ namespace Data.Database
             {
                 this.OpenConnection();
 
-                SqlCommand cmdAlumno = new SqlCommand("select * from personas where id_persona = @id", sqlConn);
+                SqlCommand cmdAlumno = new SqlCommand("select * from personas p " +
+                    "LEFT JOIN planes pl on pl.id_plan = p.id_plan where p.id_persona = @id", sqlConn);
                 cmdAlumno.Parameters.Add("@id", SqlDbType.Int).Value = ID;
                 SqlDataReader drAlumnos = cmdAlumno.ExecuteReader();
                 if (drAlumnos.Read())
                 {
                     alum.ID = (int)drAlumnos["id_persona"];
-                    alum.NombreUsuario = (string)drAlumnos["nombre_usuario"];
-                    alum.Clave = (string)drAlumnos["clave"];
-                    alum.Habilitado = (Boolean)drAlumnos["habilitado"];
+                    alum.Legajo = (int)drAlumnos["legajo"];
                     alum.Nombre = (string)drAlumnos["nombre"];
                     alum.Apellido = (string)drAlumnos["apellido"];
                     alum.EMail = (string)drAlumnos["email"];
+                    alum.Direccion = (string)drAlumnos["direccion"];
+                    alum.Telefono = (string)drAlumnos["telefono"];
+                    alum.FechaNacimiento = (DateTime)drAlumnos["fecha_nac"];
+                    alum.IDPlan = (int)drAlumnos["id_plan"];
+                    alum.IDEspecialidad = (int)drAlumnos["id_especialidad"];
                 }
                 drAlumnos.Close();
             }
@@ -116,12 +116,10 @@ namespace Data.Database
             {
                 this.OpenConnection();
 
-                SqlCommand cmdAlumno = new SqlCommand("UPDATE personas SET nombre_usuario = @nombre_usuario, clave = @clave, habilitado = @habilitado, " +
-                    "nombre = @nombre, apellido = @apellido, email = @email, direccion = @direccion, telefono = @telefono, fecha_nac = @fecha_nac, id_plan = @id_plan WHERE id_alumno = @id", sqlConn);
+                SqlCommand cmdAlumno = new SqlCommand("UPDATE personas SET legajo = @legajo, nombre = @nombre, apellido = @apellido, email = @email, " +
+                    "direccion = @direccion, telefono = @telefono, fecha_nac = @fecha_nac, id_plan = @id_plan WHERE id_persona = @id", sqlConn);
                 cmdAlumno.Parameters.Add("@id", SqlDbType.Int).Value = alumno.ID;
-                cmdAlumno.Parameters.Add("@nombre_usuario", SqlDbType.VarChar, 50).Value = alumno.NombreUsuario;
-                cmdAlumno.Parameters.Add("@clave", SqlDbType.VarChar, 50).Value = alumno.Clave;
-                cmdAlumno.Parameters.Add("@habilitado", SqlDbType.Bit).Value = alumno.Habilitado;
+                cmdAlumno.Parameters.Add("@legajo", SqlDbType.Int).Value = alumno.Legajo;
                 cmdAlumno.Parameters.Add("@nombre", SqlDbType.VarChar, 50).Value = alumno.Nombre;
                 cmdAlumno.Parameters.Add("@apellido", SqlDbType.VarChar, 50).Value = alumno.Apellido;
                 cmdAlumno.Parameters.Add("@email", SqlDbType.VarChar, 50).Value = alumno.EMail;
@@ -148,18 +146,18 @@ namespace Data.Database
             {
                 this.OpenConnection();
 
-                SqlCommand cmdSave = new SqlCommand("Insert into personas (nombre_alumno, clave, habilitado, " +
-                    "nombre, apellido, email) values (@nombre_usuario, @clave, @habilitado, @nombre, @apellido, @email, @direccion, @telefono, @fecha_nac, @id_plan) " +
+                SqlCommand cmdSave = new SqlCommand("Insert into personas (nombre, apellido, direccion, " +
+                    "email, telefono, fecha_nac, legajo, tipo_persona, id_plan) values (@nombre, @apellido, @direccion, " +
+                    "@email, @telefono, @fecha_nac, @legajo, @tipo_alumno, @id_plan) " +
                     "select @@identity", sqlConn);
-                cmdSave.Parameters.Add("@nombre_usuario", SqlDbType.VarChar, 50).Value = alumno.NombreUsuario;
-                cmdSave.Parameters.Add("@clave", SqlDbType.VarChar, 50).Value = alumno.Clave;
-                cmdSave.Parameters.Add("@habilitado", SqlDbType.Bit).Value = alumno.Habilitado;
+                cmdSave.Parameters.Add("@legajo", SqlDbType.Int).Value = alumno.Legajo;
                 cmdSave.Parameters.Add("@nombre", SqlDbType.VarChar, 50).Value = alumno.Nombre;
                 cmdSave.Parameters.Add("@apellido", SqlDbType.VarChar, 50).Value = alumno.Apellido;
                 cmdSave.Parameters.Add("@email", SqlDbType.VarChar, 50).Value = alumno.EMail;
                 cmdSave.Parameters.Add("@direccion", SqlDbType.VarChar, 50).Value = alumno.Direccion;
                 cmdSave.Parameters.Add("@telefono", SqlDbType.Int, 50).Value = alumno.Telefono;
                 cmdSave.Parameters.Add("@fecha_nac", SqlDbType.DateTime).Value = alumno.FechaNacimiento;
+                cmdSave.Parameters.Add("@tipo_alumno", SqlDbType.Int).Value = (int)TipoPersonas.Alumno;
                 cmdSave.Parameters.Add("@id_plan", SqlDbType.Int, 50).Value = alumno.IDPlan;
                 alumno.ID = Decimal.ToInt32((decimal)cmdSave.ExecuteScalar());
             }
@@ -178,16 +176,6 @@ namespace Data.Database
         {
             if (alumno.State == BusinessEntity.States.New)
             {
-                // int NextID = 0;
-                // foreach (Alumno alum in Alumnos)
-                // {
-                //  if (alum.ID > NextID)
-                // {
-                //  NextID = alum.ID;
-                // }
-                // }
-                // alumno.ID = NextID + 1;
-                // Alumnos.Add(alumno);
                 this.Insert(alumno);
             }
             else if (alumno.State == BusinessEntity.States.Deleted)
@@ -196,7 +184,6 @@ namespace Data.Database
             }
             else if (alumno.State == BusinessEntity.States.Modified)
             {
-                // Alumnos[Alumnos.FindIndex(delegate (Alumno u) { return u.ID == alumno.ID; })] = alumno;
                 this.Update(alumno);
             }
             alumno.State = BusinessEntity.States.Unmodified;
