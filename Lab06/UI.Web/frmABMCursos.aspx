@@ -12,11 +12,11 @@
 
         <asp:Panel ID="formPanel" runat="server">
             <div id="buscar">
-                <asp:Label ID="lblBuscar" runat="server" Text="Buscar por Nombre de Usuario"></asp:Label>
-                <asp:TextBox ID="txtBuscar" runat="server"></asp:TextBox>
+               <%-- <asp:Label ID="lblBuscar" runat="server" Text="Buscar por Nombre de Usuario"></asp:Label>
+                <asp:TextBox ID="txtBuscar" runat="server"></asp:TextBox>--%>
                 <br />
                 <br />
-                <asp:Button ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
+                <%--<asp:Button ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />--%>
                 <br />
                 <br />
                 <asp:GridView ID="grvCursos" runat="server" AutoGenerateColumns="False"
@@ -26,12 +26,10 @@
                     <Columns>                        
                         <asp:CommandField ShowSelectButton="True" />
                         <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
-                        <asp:BoundField DataField="NombreUsuario" HeaderText="Descripcion" SortExpression="Descripcion" />
-                        <asp:BoundField DataField="Clave" HeaderText="Clave" SortExpression="Clave" />
-                        <asp:CheckBoxField DataField="Habilitado" HeaderText="Habilitado" SortExpression="Habilitado" />
-                        <asp:BoundField DataField="Apellido" HeaderText="Apellido" SortExpression="Apellido" />
-                        <asp:BoundField DataField="EMail" HeaderText="EMail" SortExpression="EMail" />
-                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />                        
+                        <asp:BoundField DataField="AnioCalendario" HeaderText="Año Calendario" SortExpression="Nombre" />
+                        <asp:BoundField DataField="Cupo" HeaderText="Cupo" />
+                        <asp:BoundField DataField="IDComision" HeaderText="Comision" />
+                        <asp:BoundField DataField="IDMateria" HeaderText="Materia" />
                     </Columns>
                 </asp:GridView>
                 <br />
@@ -40,14 +38,18 @@
         </asp:Panel>
         <div>
             <br />
-            <asp:Label ID="lblDescripcion" runat="server" Text="Descripcion: "></asp:Label>
-            <asp:TextBox ID="txtDescripcion" runat="server"></asp:TextBox>
-            <br />
             <asp:Label ID="lblCupo" runat="server" Text="Cupo: "></asp:Label>
             <asp:TextBox ID="txtCupo" runat="server"></asp:TextBox>
             <br />
-            <asp:Label ID="lblFecha" runat="server" Text="Fecha: "></asp:Label>
-            <asp:TextBox ID="txtAnio" runat="server"></asp:TextBox>
+            <asp:Label ID="lblAnioCalendario" runat="server" Text="Año Calendario: "></asp:Label>
+            <asp:TextBox ID="txtAnioCalendario" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="lblAnioCalendario0" runat="server" Text="Camision: "></asp:Label>
+            <asp:TextBox ID="txtComision" runat="server"></asp:TextBox>
+            <br />
+            <asp:Label ID="Materia" runat="server" Text="Materia: "></asp:Label>
+            <asp:TextBox ID="txtMateria" runat="server"></asp:TextBox>
+            <br />
             <br />
             <%--<asp:Label ID="lblEmail" runat="server" Text="Email: "></asp:Label>
             <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>

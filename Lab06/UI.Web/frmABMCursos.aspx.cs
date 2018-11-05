@@ -76,57 +76,115 @@ namespace UI.Web
         }
 
         public void InhabilitarControles()
-        {
-            txtDescripcion.Enabled = false;
+        {            
             txtCupo.Enabled = false;
-            txtAnio.Enabled = false;
+            txtAnioCalendario.Enabled = false;
+            txtMateria.Enabled = false;
+            txtComision.Enabled = false;
         }
 
-        public void LimpiarCampos()
+        public void HabilitarControles()
         {
-            txtDescripcion.Text = "";
+            txtCupo.Enabled = true;
+            txtAnioCalendario.Enabled = true;
+            txtMateria.Enabled = true;
+            txtComision.Enabled = true;
+        }       
+
+        public void LimpiarControles()
+        {            
             txtCupo.Text = "";
-            txtAnio.Text = "";
+            txtAnioCalendario.Text = "";
+            txtComision.Text = "";
+            txtMateria.Text = "";
         }
 
-
-
-        public void ControlesAObjeto(Curso curso)
+        public void ControlAObjetos(Curso curso)
         {
-
+            curso.Cupo = int.Parse(txtCupo.Text);
+            curso.AnioCalendario = int.Parse(txtAnioCalendario.Text);
+            curso.IDMateria = int.Parse(txtMateria.Text);
+            curso.IDComision = int.Parse(txtComision.Text);
         }
 
-        public void ObjetosAControl(Curso curso)
+        public void ObjetoAControl(Curso curso)
         {
-
+            txtAnioCalendario.Text = Convert.ToString(curso.AnioCalendario);
+            txtCupo.Text = Convert.ToString(curso.Cupo);
+            txtMateria.Text = Convert.ToString(curso.IDMateria);
+            txtComision.Text = Convert.ToString(curso.IDComision);
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-
+            HabilitarControles();
+            //var id = int.Parse(grvCursos.SelectedRow.Cells[1].Text);
+            //if (id == 0)
+            //{
+            //    Curso usuario = new Curso();
+            //    //usuario.State = BusinessEntity.States.Modified;
+            //    //UsuarioLogic guardarUsuario = new UsuarioLogic();
+            //    ControlAObjetos(usuario);
+            //    this.Logic.Insert(usuario);
+            //    LimpiarControles();
+            //    LoadGrid();
+            //}
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
 
+            var valor = (grvCursos.SelectedRow == null)? true: false;        
+            
+            int id = (valor == true)? 0 : Convert.ToInt32(grvCursos.SelectedRow.Cells[1].Text);
+                
+            if (id == 0)
+            {
+                Curso curso = new Curso();
+                curso.State = BusinessEntity.States.New;                
+                ControlAObjetos(curso);
+                this.Logic.Save(curso);
+                LimpiarControles();
+                LoadGrid();
+            }
+            else
+            {
+                Curso usuario = new Curso();
+                usuario.State = BusinessEntity.States.Modified;                
+                ControlAObjetos(usuario);
+                this.Logic.Save(usuario);
+                LimpiarControles();
+                LoadGrid();
+            }
+            InhabilitarControles();
         }
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-
+            Curso curso = new Curso();
+            curso.State = BusinessEntity.States.Deleted;
+            curso.ID = int.Parse(grvCursos.SelectedRow.Cells[1].Text);
+            ControlAObjetos(curso);
+            this.Logic.Delete(curso.ID);
+            LimpiarControles();
+            InhabilitarControles();
+            LoadGrid();
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
-
+            LimpiarControles();
+            InhabilitarControles();
         }
 
         protected void grvCursos_SelectedIndexChanged(object sender, EventArgs e)
         {
             Curso curso = new Curso();
             var id = int.Parse(grvCursos.SelectedRow.Cells[1].Text);
+            curso.ID = id;
             curso = this.Logic.GetOne(id);
-            ObjetosAControl(curso);
+            ObjetoAControl(curso);
+            HabilitarControles();
         }
     }
 }

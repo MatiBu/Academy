@@ -31,33 +31,6 @@ namespace UI.Web {
         protected global::System.Web.UI.WebControls.Panel formPanel;
         
         /// <summary>
-        /// lblBuscar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblBuscar;
-        
-        /// <summary>
-        /// txtBuscar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtBuscar;
-        
-        /// <summary>
-        /// btnBuscar control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuscar;
-        
-        /// <summary>
         /// grvCursos control.
         /// </summary>
         /// <remarks>
@@ -65,24 +38,6 @@ namespace UI.Web {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView grvCursos;
-        
-        /// <summary>
-        /// lblDescripcion control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDescripcion;
-        
-        /// <summary>
-        /// txtDescripcion control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
         
         /// <summary>
         /// lblCupo control.
@@ -103,22 +58,58 @@ namespace UI.Web {
         protected global::System.Web.UI.WebControls.TextBox txtCupo;
         
         /// <summary>
-        /// lblFecha control.
+        /// lblAnioCalendario control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFecha;
+        protected global::System.Web.UI.WebControls.Label lblAnioCalendario;
         
         /// <summary>
-        /// txtAnio control.
+        /// txtAnioCalendario control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtAnio;
+        protected global::System.Web.UI.WebControls.TextBox txtAnioCalendario;
+        
+        /// <summary>
+        /// lblAnioCalendario0 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAnioCalendario0;
+        
+        /// <summary>
+        /// txtComision control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtComision;
+        
+        /// <summary>
+        /// Materia control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Materia;
+        
+        /// <summary>
+        /// txtMateria control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMateria;
         
         /// <summary>
         /// btnAgregar control.
