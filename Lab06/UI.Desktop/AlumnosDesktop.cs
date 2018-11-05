@@ -163,7 +163,10 @@ namespace UI.Desktop
                 var valor = 0;
                 Int32.TryParse(comboEspecialidad.SelectedValue.ToString(), out valor);
                 var planesFiltrados = LstPlanes.Where(p => p.IDEspecialidad == valor).ToList();
-                comboPlan.DataSource = planesFiltrados;
+                if (planesFiltrados != null && planesFiltrados.Count > 0)
+                {
+                    comboPlan.DataSource = planesFiltrados;
+                }
             }
         }
     }

@@ -33,7 +33,9 @@ namespace UI.Web
 
         public Curso Entity { get; set; }
 
-        CursoLogic _logic;
+        CursoLogic _cursoLogic;
+        ComisionLogic _comisionLogic;
+        MateriaLogic _materiaLogic;
 
         private int SelectID
         {
@@ -62,26 +64,60 @@ namespace UI.Web
             }
         }
 
-        private CursoLogic Logic
+        private CursoLogic CursoLogic
         {
             get
             {
-                if (_logic == null)
+                if (_cursoLogic == null)
                 {
-                    _logic = new CursoLogic();
+                    _cursoLogic = new CursoLogic();
                 }
-                return _logic;
+                return _cursoLogic;
             }
         }
 
+        private ComisionLogic ComisionLogic
+        {
+            get
+            {
+                if (_comisionLogic == null)
+                {
+                    _comisionLogic = new ComisionLogic();
+                }
+                return _comisionLogic;
+            }
+        }
+
+
+        private MateriaLogic MateriaLogic
+        {
+            get
+            {
+                if (_materiaLogic == null)
+                {
+                    _materiaLogic = new MateriaLogic();
+                }
+                return _materiaLogic;
+            }
+        }
         public void LoadGrid()
         {
-            this.grvCursos.DataSource = this.Logic.GetAll();
+            List<Curso> todosLosCursos = this.CursoLogic.GetAll();
+            List<Comision> todasLasComisiones = this.ComisionLogic.GetAll();
+            List<Materia> todasLasMaterias = this.MateriaLogic.GetAll();
+
+            foreach (Curso curso in todosLosCursos)
+            {
+                curso.DescripcionComision = todasLasComisiones.Find(c => c.ID == curso.IDComision).Descripcion;
+                curso.DescripcionMateria = todasLasMaterias.Find(m => m.ID == curso.IDMateria).Descripcion;
+            }
+
+            this.grvCursos.DataSource = todosLosCursos;
             this.grvCursos.DataBind();
         }
 
         public void InhabilitarControles()
-        {            
+        {
             txtCupo.Enabled = false;
             txtAnioCalendario.Enabled = false;
             txtMateria.Enabled = false;
@@ -94,10 +130,10 @@ namespace UI.Web
             txtAnioCalendario.Enabled = true;
             txtMateria.Enabled = true;
             txtComision.Enabled = true;
-        }       
+        }
 
         public void LimpiarControles()
-        {            
+        {
             txtCupo.Text = "";
             txtAnioCalendario.Text = "";
             txtComision.Text = "";
@@ -139,16 +175,16 @@ namespace UI.Web
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
 
-            var valor = (grvCursos.SelectedRow == null)? true: false;        
-            
-            int id = (valor == true)? 0 : Convert.ToInt32(grvCursos.SelectedRow.Cells[1].Text);
-                
+            var valor = (grvCursos.SelectedRow == null) ? true : false;
+
+            int id = (valor == true) ? 0 : Convert.ToInt32(grvCursos.SelectedRow.Cells[1].Text);
+
             if (id == 0)
             {
                 Curso curso = new Curso();
-                curso.State = BusinessEntity.States.New;                
+                curso.State = BusinessEntity.States.New;
                 ControlAObjetos(curso);
-                this.Logic.Save(curso);
+                this.CursoLogic.Save(curso);
                 LimpiarControles();
                 LoadGrid();
             }
@@ -156,9 +192,9 @@ namespace UI.Web
             {
                 Curso curso = new Curso();
                 curso.ID = id;
-                curso.State = BusinessEntity.States.Modified;                
+                curso.State = BusinessEntity.States.Modified;
                 ControlAObjetos(curso);
-                this.Logic.Save(curso);
+                this.CursoLogic.Save(curso);
                 LimpiarControles();
                 LoadGrid();
             }
@@ -171,7 +207,7 @@ namespace UI.Web
             curso.State = BusinessEntity.States.Deleted;
             curso.ID = int.Parse(grvCursos.SelectedRow.Cells[1].Text);
             ControlAObjetos(curso);
-            this.Logic.Delete(curso.ID);
+            this.CursoLogic.Delete(curso.ID);
             LimpiarControles();
             InhabilitarControles();
             LoadGrid();
@@ -188,7 +224,7 @@ namespace UI.Web
             Curso curso = new Curso();
             var id = int.Parse(grvCursos.SelectedRow.Cells[1].Text);
             curso.ID = id;
-            curso = this.Logic.GetOne(id);
+            curso = this.CursoLogic.GetOne(id);
             ObjetoAControl(curso);
             HabilitarControles();
         }

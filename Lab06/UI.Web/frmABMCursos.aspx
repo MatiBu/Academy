@@ -23,8 +23,8 @@
                         <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                         <asp:BoundField DataField="AnioCalendario" HeaderText="Año Calendario" SortExpression="Nombre" />
                         <asp:BoundField DataField="Cupo" HeaderText="Cupo" />
-                        <asp:BoundField DataField="IDComision" HeaderText="Comision" />
-                        <asp:BoundField DataField="IDMateria" HeaderText="Materia" />
+                        <asp:BoundField DataField="DescripcionComision" HeaderText="Comision" />
+                        <asp:BoundField DataField="DescripcionMateria" HeaderText="Materia" />
                     </Columns>
                 </asp:GridView>
                 <br />
