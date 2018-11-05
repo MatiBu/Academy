@@ -31,7 +31,21 @@ namespace Business.Logic
             catch (Exception Ex)
             {
                 Exception ExcepcionManejada =
-                new Exception("Error al recuperar lista de usuarios", Ex);
+                new Exception("Error al recuperar lista de cursos", Ex);
+                throw ExcepcionManejada;
+            }
+        }
+
+        public List<CursosComisionMateria> GetAllCursosComisionMateria()
+        {
+            try
+            {
+                return CursoData.GetAllCursosComisionMateria();
+            }
+            catch (Exception Ex)
+            {
+                Exception ExcepcionManejada =
+                new Exception("Error al recuperar lista de cursos", Ex);
                 throw ExcepcionManejada;
             }
         }
