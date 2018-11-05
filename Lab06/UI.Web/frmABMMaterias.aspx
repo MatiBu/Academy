@@ -1,15 +1,16 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="frmABMMaterias.aspx.cs" Inherits="UI.Web.frmABMMaterias" %>
+﻿<%@ Page Language="C#"MasterPageFile="~/Site.Master" AutoEventWireup="true" 
+    CodeBehind="frmABMMaterias.aspx.cs" Inherits="UI.Web.frmABMMaterias" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <title>Materias</title>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="bodyContentPlaceHolder" runat="server">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
+
     <form id="form1" runat="server">
-        <div>
+        <div class="text-center">
+            <h2>Administración de materias</h2>
         </div>
+        <br />    
     </form>
-</body>
-</html>
+</asp:Content>

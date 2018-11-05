@@ -1,15 +1,18 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="frmReporteCursos.aspx.cs" Inherits="UI.Web.frmReporteCursos" %>
+﻿<%@ Page Language="C#"MasterPageFile="~/Site.Master" AutoEventWireup="true" 
+    CodeBehind="frmReporteCursos.aspx.cs" Inherits="UI.Web.frmReporteCursos" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <title>Reporte</title>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="bodyContentPlaceHolder" runat="server">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
+
     <form id="form1" runat="server">
-        <div>
+        <div class="text-center">
+            <h2>Reporte de cursos</h2>
         </div>
+        <br />
+
+        
     </form>
-</body>
-</html>
+</asp:Content>

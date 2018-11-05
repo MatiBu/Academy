@@ -156,6 +156,7 @@ namespace UI.Web
             var id = int.Parse(grvUsuarios.SelectedRow.Cells[1].Text);
             usuario = this.Logic.GetOne(id);
             ObjetosAControl(usuario);
+            HabilitarControles();
         }
 
         public void ObjetosAControl(Usuario usuario)

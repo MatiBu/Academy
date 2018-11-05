@@ -10,7 +10,7 @@
 namespace UI.Web {
     
     
-    public partial class frmABMPlanes {
+    public partial class frmABMEspecialidades {
         
         /// <summary>
         /// Control form1.

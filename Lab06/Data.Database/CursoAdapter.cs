@@ -18,7 +18,7 @@ namespace Data.Database
             try
             {
                 this.OpenConnection();
-                SqlCommand cmdCursos = new SqlCommand("select * from Curso where tipo_persona = 3", sqlConn);
+                SqlCommand cmdCursos = new SqlCommand("select * from cursos", sqlConn);
                 SqlDataReader drCursos = cmdCursos.ExecuteReader();
                 while (drCursos.Read())
                 {
@@ -53,7 +53,7 @@ namespace Data.Database
             {
                 this.OpenConnection();
 
-                SqlCommand cmdCurso = new SqlCommand("select * from Curso where id_curso = @id", sqlConn);
+                SqlCommand cmdCurso = new SqlCommand("select * from cursos where id_curso = @id", sqlConn);
                 cmdCurso.Parameters.Add("@id", SqlDbType.Int).Value = ID;
                 SqlDataReader drCursos = cmdCurso.ExecuteReader();
                 if (drCursos.Read())
@@ -85,7 +85,7 @@ namespace Data.Database
             {
                 this.OpenConnection();
 
-                SqlCommand cmdDelete = new SqlCommand("delete Curso where id_curso = @id", sqlConn);
+                SqlCommand cmdDelete = new SqlCommand("delete cursos where id_curso = @id", sqlConn);
                 cmdDelete.Parameters.Add("@id", SqlDbType.Int).Value = ID;
                 cmdDelete.ExecuteNonQuery();
 
@@ -107,7 +107,7 @@ namespace Data.Database
             {
                 this.OpenConnection();
 
-                SqlCommand cmdCurso = new SqlCommand("UPDATE Curso SET descripcion = @Descripcion, cupo = @Cupo, AnioCalendario = @AnioCalendario, " +
+                SqlCommand cmdCurso = new SqlCommand("UPDATE cursos SET descripcion = @Descripcion, cupo = @Cupo, AnioCalendario = @AnioCalendario, " +
                     "IDComision = @IDComision, IDMateria = @IDMateriaWHERE id_Curso = @id", sqlConn);
 
                 cmdCurso.Parameters.Add("@id", SqlDbType.Int).Value = Curso.ID;

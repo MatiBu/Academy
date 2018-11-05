@@ -8,22 +8,25 @@
 
 
     <form id="form1" runat="server">
-
+        <div class="text-center">
+            <h2>Administración de usuarios</h2>
+        </div>
+        <br />
 
         <asp:Panel ID="formPanel" runat="server">
             <div id="buscar">
-                <asp:Label ID="lblBuscar" runat="server" Text="Buscar por Nombre de Usuario"></asp:Label>
-                <asp:TextBox ID="txtBuscar" runat="server"></asp:TextBox>
-                <br />
-                <br />
-                <asp:Button ID="btnBuscar" runat="server" Text="Buscar" OnClick="btnBuscar_Click" />
-                <br />
+                <div class="form-inline">
+                    <div class="form-group">
+                        <asp:Label ID="lblBuscar" runat="server" Text="Buscar por Nombre de Usuario"></asp:Label>
+                        <asp:TextBox ID="txtBuscar" class="form-control mx-2" runat="server"></asp:TextBox>
+                        <asp:Button ID="btnBuscar" runat="server" class="btn btn-default" Text="Buscar" OnClick="btnBuscar_Click" />
+                    </div>
+                </div>
                 <br />
                 <asp:GridView ID="grvUsuarios" runat="server" AutoGenerateColumns="False"
                     OnSelectedIndexChanged="grvUsuarios_SelectedIndexChanged"
-                    
-                    DataKeyNames="ID">
-                    <Columns>                        
+                    DataKeyNames="ID" CssClass="table table-hover">
+                    <Columns>
                         <asp:CommandField ShowSelectButton="True" />
                         <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
                         <asp:BoundField DataField="NombreUsuario" HeaderText="NombreUsuario" SortExpression="NombreUsuario" />
@@ -31,42 +34,63 @@
                         <asp:CheckBoxField DataField="Habilitado" HeaderText="Habilitado" SortExpression="Habilitado" />
                         <asp:BoundField DataField="Apellido" HeaderText="Apellido" SortExpression="Apellido" />
                         <asp:BoundField DataField="EMail" HeaderText="EMail" SortExpression="EMail" />
-                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />                        
+                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
                     </Columns>
                 </asp:GridView>
                 <br />
                 <br />
-            </div>         
+            </div>
         </asp:Panel>
-        <div>
-            <asp:Label ID="lblNombre" runat="server" Text="Nombre: "></asp:Label>
-            <asp:TextBox ID="txtNombre" runat="server"></asp:TextBox>
-            <br />
-            <asp:Label ID="lblApellido" runat="server" Text="Apellido: "></asp:Label>
-            <asp:TextBox ID="txtApellido" runat="server"></asp:TextBox>
-            <br />
-            <asp:Label ID="lblEmail" runat="server" Text="Email: "></asp:Label>
-            <asp:TextBox ID="txtEmail" runat="server"></asp:TextBox>
-            <br />
-            <asp:Label ID="lblHabilitado" runat="server" Text="Habilitado: "></asp:Label>
-            <asp:CheckBox ID="cbHabilitado" runat="server"></asp:CheckBox>
-            <br />
-            <asp:Label ID="lblNombreUsuario" runat="server" Text="Nombre de Usuario: "></asp:Label>
-            <asp:TextBox ID="txtNombreUsuario" runat="server"></asp:TextBox>
-            <br />
-            <asp:Label ID="lblClave" runat="server" Text="Clave: "></asp:Label>
-            <asp:TextBox ID="txtClave" runat="server" TextMode="Password"></asp:TextBox>
-            <br />
-            <asp:Label ID="lblRepetirClave" runat="server" Text="Repetir Clave: "></asp:Label>
-            <asp:TextBox ID="txtRepetirClave" runat="server" TextMode="Password"></asp:TextBox>
-            <br />
+        <div class="col-5">
+            <div class="form-group row">
+                <asp:Label class="col-5 col-form-label" ID="lblNombre" runat="server" Text="Nombre: "></asp:Label>
+                <div class="col-7">
+                    <asp:TextBox ID="txtNombre" class="form-control" runat="server"></asp:TextBox>
+                </div>
+            </div>
+            <div class="form-group row">
+                <asp:Label class="col-5 col-form-label" ID="lblApellido" runat="server" Text="Apellido: "></asp:Label>
+                <div class="col-7">
+                    <asp:TextBox ID="txtApellido" runat="server" class="form-control"></asp:TextBox>
+                </div>
+            </div>
+            <div class="form-group row">
+                <asp:Label class="col-5 col-form-label" ID="lblEmail" runat="server" Text="Email: "></asp:Label>
+                <div class="col-7">
+                    <asp:TextBox ID="txtEmail" runat="server" class="form-control"></asp:TextBox>
+                </div>
+            </div>
+            <div class="form-group row">
+                <asp:Label class="col-5 col-form-label" ID="lblHabilitado" runat="server" Text="Habilitado: "></asp:Label>
+                <div class="col-7">
+                    <asp:CheckBox ID="cbHabilitado" runat="server" class="form-control"></asp:CheckBox>
+                </div>
+            </div>
+            <div class="form-group row">
+                <asp:Label class="col-5 col-form-label" ID="lblNombreUsuario" runat="server" Text="Nombre de Usuario: "></asp:Label>
+                <div class="col-7">
+                    <asp:TextBox ID="txtNombreUsuario" runat="server" class="form-control"></asp:TextBox>
+                </div>
+            </div>
+            <div class="form-group row">
+                <asp:Label class="col-5 col-form-label" ID="lblClave" runat="server" Text="Clave: "></asp:Label>
+                <div class="col-7">
+                    <asp:TextBox ID="txtClave" runat="server" TextMode="Password" class="form-control"></asp:TextBox>
+                </div>
+            </div>
+            <div class="form-group row">
+                <asp:Label class="col-5 col-form-label" ID="lblRepetirClave" runat="server" Text="Repetir Clave: "></asp:Label>
+                <div class="col-7">
+                    <asp:TextBox ID="txtRepetirClave" runat="server" TextMode="Password" class="form-control"></asp:TextBox>
+                </div>
+            </div>
+            <div class="d-flex">
+                <asp:Button class="ml-auto mr-2 btn btn-default" ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" />
+                <asp:Button class="mr-2 btn btn-default" ID="btnGuardar" runat="server" Text="Guardar" OnClick="btnGuardar_Click" />
+                <asp:Button class="mr-2 btn btn-default" ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" />
+                <asp:Button class="mr-2 btn btn-default" ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />
+            </div>
         </div>
-        <div>
-            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" />
-            <asp:Button ID="btnGuardar" runat="server" Text="Guardar" OnClick="btnGuardar_Click" />
-            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" />
-            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />
-        </div>
-        <br />      
+        <br />
     </form>
 </asp:Content>

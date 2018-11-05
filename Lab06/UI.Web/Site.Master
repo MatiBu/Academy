@@ -36,7 +36,8 @@
                                 <a href="/frmABMCursos.aspx" class="dropdown-item">Cursos</a>
                                 <a href="/frmABMMaterias.aspx" class="dropdown-item">Materias</a>
                                 <a href="/frmABMPlanes.aspx" class="dropdown-item">Planes</a>
-                                <a href="/frmABMEspeciialidades.aspx" class="dropdown-item">Especialidades</a>
+                                <a href="/frmABMEspecialidades.aspx" class="dropdown-item">Especialidades</a>
+                                <a href="/frmABMComisiones.aspx" class="dropdown-item">Comisiones</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
