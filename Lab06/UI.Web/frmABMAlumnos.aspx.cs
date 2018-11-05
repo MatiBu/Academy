@@ -6,14 +6,18 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Business.Logic;
 using Business.Entities;
+using System.Web.Security;
 
 namespace UI.Web
 {
-    public partial class frmAlumnos : System.Web.UI.Page
+    public partial class frmABMAlumnos : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!this.Page.User.Identity.IsAuthenticated)
+            {
+                FormsAuthentication.RedirectToLoginPage();
+            }
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
@@ -64,7 +68,7 @@ namespace UI.Web
         {
             Alumno.Nombre = txtNombre.Text;
             Alumno.Apellido = txtApellido.Text;
-            Alumno.EMail = txtEmail.Text;            
+            Alumno.EMail = txtEmail.Text;
             Alumno.Habilitado = cbHabilitado.Checked;
             Alumno.Clave = txtClave.Text;
         }
@@ -73,7 +77,7 @@ namespace UI.Web
         {
             txtNombre.Enabled = true;
             txtApellido.Enabled = true;
-            txtEmail.Enabled = true;            
+            txtEmail.Enabled = true;
             cbHabilitado.Enabled = true;
             txtClave.Enabled = true;
             txtRepetirClave.Enabled = true;
@@ -83,7 +87,7 @@ namespace UI.Web
         {
             txtNombre.Text = "";
             txtApellido.Text = "";
-            txtEmail.Text = "";            
+            txtEmail.Text = "";
             cbHabilitado.Text = "";
             txtClave.Text = "";
             txtRepetirClave.Text = "";

@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Business.Logic;
 using Business.Entities;
+using System.Web.Security;
 
 namespace UI.Web
 { 
@@ -64,7 +65,11 @@ namespace UI.Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (!this.Page.User.Identity.IsAuthenticated)
+            {
+                FormsAuthentication.RedirectToLoginPage();
+            }
+            if (!IsPostBack)
             {
                 InhabilitarControles();
                 LoadGrid();

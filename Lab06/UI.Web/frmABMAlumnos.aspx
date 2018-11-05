@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"
-    CodeBehind="frmABMAlumnos.aspx.cs" Inherits="UI.Web.frmAlumnos" %>
+    CodeBehind="frmABMAlumnos.aspx.cs" Inherits="UI.Web.frmABMAlumnos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>Usuarios</title>
