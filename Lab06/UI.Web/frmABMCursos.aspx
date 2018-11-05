@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#"MasterPageFile="~/Site.Master" AutoEventWireup="true" 
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"
     CodeBehind="frmABMCursos.aspx.cs" Inherits="UI.Web.frmABMCursos" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -15,51 +15,54 @@
 
         <asp:Panel ID="formPanel" runat="server">
             <div id="buscar">
-                <asp:Label ID="lblBuscar" runat="server" Text="Buscar por Nombre de Usuario"></asp:Label>
-                <asp:TextBox ID="txtBuscar" runat="server"></asp:TextBox>
-                <br />
-                <br />
-                <asp:Button ID="btnBuscar" runat="server" Text="Buscar" />
-                <br />
-                <br />
                 <asp:GridView ID="grvCursos" runat="server" AutoGenerateColumns="False"
                     OnSelectedIndexChanged="grvCursos_SelectedIndexChanged"
-                    
-                    DataKeyNames="ID">
-                    <Columns>                        
+                    DataKeyNames="ID" CssClass="table table-hover">
+                    <Columns>
                         <asp:CommandField ShowSelectButton="True" />
                         <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
-                        <asp:BoundField DataField="NombreUsuario" HeaderText="Descripcion" SortExpression="Descripcion" />
-                        <asp:BoundField DataField="Clave" HeaderText="Clave" SortExpression="Clave" />
-                        <asp:CheckBoxField DataField="Habilitado" HeaderText="Habilitado" SortExpression="Habilitado" />
-                        <asp:BoundField DataField="Apellido" HeaderText="Apellido" SortExpression="Apellido" />
-                        <asp:BoundField DataField="EMail" HeaderText="EMail" SortExpression="EMail" />
-                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />                        
+                        <asp:BoundField DataField="AnioCalendario" HeaderText="Año Calendario" SortExpression="Nombre" />
+                        <asp:BoundField DataField="Cupo" HeaderText="Cupo" />
+                        <asp:BoundField DataField="IDComision" HeaderText="Comision" />
+                        <asp:BoundField DataField="IDMateria" HeaderText="Materia" />
                     </Columns>
                 </asp:GridView>
                 <br />
                 <br />
-            </div>         
+            </div>
         </asp:Panel>
-        <div>
-            <br />
-            <asp:Label ID="lblDescripcion" runat="server" Text="Descripcion: "></asp:Label>
-            <asp:TextBox ID="txtDescripcion" runat="server"></asp:TextBox>
-            <br />
-            <asp:Label ID="lblCupo" runat="server" Text="Cupo: "></asp:Label>
-            <asp:TextBox ID="txtCupo" runat="server"></asp:TextBox>
-            <br />
-            <asp:Label ID="lblFecha" runat="server" Text="Fecha: "></asp:Label>
-            <asp:TextBox ID="txtAnio" runat="server"></asp:TextBox>
-            <br />
-            <br />
+        <div class="col-5">
+            <div class="form-group row">
+                <asp:Label class="col-5 col-form-label" ID="lblCupo" runat="server" Text="Cupo: "></asp:Label>
+                <div class="col-7">
+                    <asp:TextBox class="form-control" ID="txtCupo" runat="server"></asp:TextBox>
+                </div>
+            </div>
+            <div class="form-group row">
+                <asp:Label class="col-5 col-form-label" ID="lblAnioCalendario" runat="server" Text="Año Calendario: "></asp:Label>
+                <div class="col-7">
+                    <asp:TextBox class="form-control" ID="txtAnioCalendario" runat="server"></asp:TextBox>
+                </div>
+            </div>
+            <div class="form-group row">
+                <asp:Label class="col-5 col-form-label" ID="lblAnioCalendario0" runat="server" Text="Camision: "></asp:Label>
+                <div class="col-7">
+                    <asp:TextBox class="form-control" ID="txtComision" runat="server"></asp:TextBox>
+                </div>
+            </div>
+            <div class="form-group row">
+                <asp:Label class="col-5 col-form-label" ID="Materia" runat="server" Text="Materia: "></asp:Label>
+                <div class="col-7">
+                    <asp:TextBox class="form-control" ID="txtMateria" runat="server"></asp:TextBox>
+                </div>
+            </div>
         </div>
-        <div>
-            <asp:Button ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" />
-            <asp:Button ID="btnGuardar" runat="server" Text="Guardar" OnClick="btnGuardar_Click" />
-            <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" />
-            <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />
+        <div class="d-flex">
+            <asp:Button class="ml-auto mr-2 btn btn-default" ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" />
+            <asp:Button class="mr-2 btn btn-default" ID="btnGuardar" runat="server" Text="Guardar" OnClick="btnGuardar_Click" />
+            <asp:Button class="mr-2 btn btn-default" ID="btnEliminar" runat="server" Text="Eliminar" OnClick="btnEliminar_Click" />
+            <asp:Button class="mr-2 btn btn-default" ID="btnCancelar" runat="server" Text="Cancelar" OnClick="btnCancelar_Click" />
         </div>
-        <br />      
+        <br />
     </form>
 </asp:Content>
