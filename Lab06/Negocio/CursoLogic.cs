@@ -49,15 +49,15 @@ namespace Business.Logic
                 throw ExcepcionManejada;
             }
         }
-
+        
         public void Save(Curso Curso)
         {
             CursoData.Save(Curso);
         }
 
-        public void Insert(Curso curso)
+        public void Insert(Curso Curso)
         {
-            CursoData.Insert(curso);
+            CursoData.Insert(Curso);
         }
 
         public void Delete(int ID)

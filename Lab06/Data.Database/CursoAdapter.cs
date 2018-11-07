@@ -172,60 +172,61 @@ namespace Data.Database
             {
                 this.CloseConnection();
             }
-        }
+        }        
 
         public void Insert(Curso Curso)
         {
-            int id;            
-            int idPln;
+            //int idEsp;
+            
             try
             {
 
                 this.OpenConnection();
 
-                SqlCommand cmdCurso = new SqlCommand("Insert into especialidades (desc_especialidad) values (@desc_especialidad)" +
-                    "select @@identity", sqlConn);                
-                cmdCurso.Parameters.Add("@desc_especialidad", SqlDbType.VarChar, 50).Value = "A definir";
-                id = Decimal.ToInt32((decimal)cmdCurso.ExecuteScalar());
-                cmdCurso.Parameters.Clear();
+                //SqlCommand cmdCurso = new SqlCommand("Insert into especialidades (desc_especialidad) values (@desc_especialidad)" +
+                //    "select @@identity", sqlConn);
+                //cmdCurso.Parameters.Add("@desc_especialidad", SqlDbType.VarChar, 50).Value = "A definir";
+                //idEsp = Decimal.ToInt32((decimal)cmdCurso.ExecuteScalar());
+                //cmdCurso.Parameters.Clear();
 
-                cmdCurso.CommandText = "Insert into planes (desc_plan, id_especialidad) " +
-                    "values (@descripcion, @id_especialidad) " +
-                    "select @@identity";
-                cmdCurso.Parameters.Add("@descripcion", SqlDbType.VarChar, 50).Value = "";
-                cmdCurso.Parameters.Add("@id_especialidad", SqlDbType.Int).Value = Convert.ToInt32(id);
-                idPln = Decimal.ToInt32((decimal)cmdCurso.ExecuteScalar());
-                cmdCurso.Parameters.Clear();
+                //cmdCurso.CommandText = "Insert into planes (desc_plan, id_especialidad) " +
+                //    "values (@descripcion, @id_especialidad) " +
+                //    "select @@identity";
+                //cmdCurso.Parameters.Add("@descripcion", SqlDbType.VarChar, 50).Value = "";
+                //cmdCurso.Parameters.Add("@id_especialidad", SqlDbType.Int).Value = Convert.ToInt32(idEsp);
+                //com.IDPlan = Decimal.ToInt32((decimal)cmdCurso.ExecuteScalar());
+                //cmdCurso.Parameters.Clear();
 
-                cmdCurso.CommandText = "Insert into comisiones (desc_comision, anio_especialidad, id_plan) " +
-                    " values (@desc_comision, @anio_especialidad, @id_plan) " +
-                    "select @@identity";
-                cmdCurso.Parameters.Add("@desc_comision", SqlDbType.VarChar, 50).Value = "";
-                cmdCurso.Parameters.Add("@anio_especialidad", SqlDbType.Int).Value = Curso.AnioCalendario;
-                cmdCurso.Parameters.Add("@id_plan", SqlDbType.Int).Value = Convert.ToInt32(idPln);
-                Curso.IDComision = Decimal.ToInt32((decimal)cmdCurso.ExecuteScalar());
-                cmdCurso.Parameters.Clear();
+                //cmdCurso.CommandText = "Insert into comisiones (desc_comision, anio_especialidad, id_plan) " +
+                //    " values (@desc_comision, @anio_especialidad, @id_plan) " +
+                //    "select @@identity";
+                //cmdCurso.Parameters.Add("@desc_comision", SqlDbType.VarChar, 50).Value = com.Descripcion;
+                //cmdCurso.Parameters.Add("@anio_especialidad", SqlDbType.Int).Value = com.AnioEspecialidad;
+                //cmdCurso.Parameters.Add("@id_plan", SqlDbType.Int).Value = com.IDPlan;
+                //Curso.IDComision = Decimal.ToInt32((decimal)cmdCurso.ExecuteScalar());
+                //cmdCurso.Parameters.Clear();
 
-                cmdCurso.CommandText = "Insert into materias (desc_materia, hs_semanales, hs_totales, id_plan)" +
-                    " values (@desc_materia, @hs_semanales, @hs_totales, @id_plan) " +
-                    "select @@identity";                
-                cmdCurso.Parameters.Add("@desc_materia", SqlDbType.VarChar, 50).Value = "";
-                cmdCurso.Parameters.Add("@hs_semanales", SqlDbType.Int).Value = 0;
-                cmdCurso.Parameters.Add("@hs_totales", SqlDbType.Int).Value = 0;
-                cmdCurso.Parameters.Add("@id_plan", SqlDbType.Int).Value = idPln;
-                Curso.IDMateria = Decimal.ToInt32((decimal)cmdCurso.ExecuteScalar());
-                cmdCurso.Parameters.Clear();
-
-                cmdCurso.CommandText = "Insert into cursos(id_materia, id_comision, " +
-                    "anio_calendario, cupo)" +
-                    "values (@id_materia, @id_comision, @anio_calendario, @cupo) " +
-                    "select @@identity";
+                //cmdCurso.CommandText = "Insert into materias (desc_materia, hs_semanales, hs_totales, id_plan)" +
+                //    " values (@desc_materia, @hs_semanales, @hs_totales, @id_plan) " +
+                //    "select @@identity";                
+                //cmdCurso.Parameters.Add("@desc_materia", SqlDbType.VarChar, 50).Value = mat.Descripcion;
+                //cmdCurso.Parameters.Add("@hs_semanales", SqlDbType.Int).Value = mat.HSSemanales;
+                //cmdCurso.Parameters.Add("@hs_totales", SqlDbType.Int).Value = mat.HSTotales;
+                //cmdCurso.Parameters.Add("@id_plan", SqlDbType.Int).Value = com.IDPlan;
+                //Curso.IDMateria = Decimal.ToInt32((decimal)cmdCurso.ExecuteScalar());
+                //cmdCurso.Parameters.Clear();
+                SqlCommand cmdCurso = new SqlCommand("Insert into cursos(id_materia, id_comision, " +
+                    "anio_calendario, cupo) values (@id_materia, @id_comision, @anio_calendario, @cupo) " +
+                    "select @@identity", sqlConn);   
+                //cmdCurso.CommandText = "Insert into cursos(id_materia, id_comision, " +
+                //    "anio_calendario, cupo)" +
+                //    "values (@id_materia, @id_comision, @anio_calendario, @cupo) " +
+                //    "select @@identity";
                 cmdCurso.Parameters.Add("@id_materia", SqlDbType.Int).Value = Curso.IDMateria;
                 cmdCurso.Parameters.Add("@id_comision", SqlDbType.Int).Value = Curso.IDComision;
                 cmdCurso.Parameters.Add("@anio_calendario", SqlDbType.Int).Value = Curso.AnioCalendario;
                 cmdCurso.Parameters.Add("@cupo", SqlDbType.Int).Value = Curso.Cupo;
                 Curso.ID = Decimal.ToInt32((decimal)cmdCurso.ExecuteScalar());
-
             }
             catch (Exception Ex)
             {
