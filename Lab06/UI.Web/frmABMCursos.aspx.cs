@@ -110,7 +110,6 @@ namespace UI.Web
         public void LoadGrid()
         {
             List<Curso> todosLosCursos = this.CursoLogic.GetAll();
-
             List<Comision> todasLasComisiones = this.ComisionLogic.GetAll();
             List<Materia> todasLasMaterias = this.MateriaLogic.GetAll();
 
@@ -135,12 +134,8 @@ namespace UI.Web
         public void InhabilitarControles()
         {
             txtCupo.Enabled = false;
-            txtAnioCalendario.Enabled = false;
-            //txtMateria.Enabled = false;
-            //txtComision.Enabled = false;
-            //ddlComision.SelectedValue = "";
-            ddlComision.Enabled = false;
-            //ddlMateria.SelectedValue = "";
+            txtAnioCalendario.Enabled = false;            
+            ddlComision.Enabled = false;            
             ddlMateria.Enabled = false;            
         }
 
@@ -155,11 +150,8 @@ namespace UI.Web
         public void HabilitarControles()
         {
             txtCupo.Enabled = true;
-            txtAnioCalendario.Enabled = true;
-            //txtMateria.Enabled = true;
-            //txtComision.Enabled = true;
-            ddlComision.Enabled = true;
-            //ddlMateria.SelectedValue = "";
+            txtAnioCalendario.Enabled = true;            
+            ddlComision.Enabled = true;            
             ddlMateria.Enabled = true;
         }
 
@@ -191,51 +183,13 @@ namespace UI.Web
             ddlComision.SelectedValue = ddlComision.Items[curso.IDComision].Text;
         }        
 
-        //public string DevuelveDescripcionComision(int idComision)
-        //{
-            
-        //    foreach (var item in ddlComision.ItemType)
-        //    {
-        //        //if (item.ID == idComision)
-        //        //{
-        //        //    return item.Descripcion;
-        //        //}
-        //    }
-        //    return "";
-        //}
-
-        //public string DevuelveDescripcionMateria(int idCurso)
-        //{
-        //    return ddlMateria.Items[idCurso].Text;
-        //    //ddlMateria.Items.ToString();
-        //    //for (int i = 0; i < ddlMateria.Items.Count; i++)
-        //    //{
-        //    //    var item = ddlMateria.Items[1].Text;
-
-        //    //}
-            
-        //    //return "";
-        //}
-
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             HabilitarControles();
-            //var id = int.Parse(grvCursos.SelectedRow.Cells[1].Text);
-            //if (id == 0)
-            //{
-            //    Curso curso = new Curso();
-            //    //curso.State = BusinessEntity.States.Modified;
-            //    //cursoLogic guardarcurso = new cursoLogic();
-            //    ControlAObjetos(curso);
-            //    this.Logic.Insert(curso);
-            //    LimpiarControles();
-            //    LoadGrid();
-            //}
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
-        {
-            ValidarControles();
+        {            
             Curso curso = new Curso();
             var valor = (grvCursos.SelectedRow == null) ? true : false;
             int id = (valor == true) ? 0 : Convert.ToInt32(grvCursos.SelectedRow.Cells[1].Text);
@@ -348,10 +302,7 @@ namespace UI.Web
                 }
             }
             catch (Exception ex)
-            {
-                //lblValidarComision.Text = string.Format("Hubo un problema al recuperar las comisiones," +
-                //    "por favor comunicarse con el administrador, disculpe las molestias. Para mas detalles " + ex.Message);
-                //lblValidarComision.Visible = true;
+            {                
                 throw new Exception(ex.Message);
             }
 
@@ -373,9 +324,7 @@ namespace UI.Web
                 else
                 {
                     comisiones = this.ComisionLogic.GetAll();
-                    IdCom = comisiones.Find(c => c.Descripcion == comision).ID;
-                    //com.AnioEspecialidad = comisiones.Find(c => c.Descripcion == comision).AnioEspecialidad;
-                    //com.IDPlan = comisiones.Find(c => c.Descripcion == comision).IDPlan;
+                    IdCom = comisiones.Find(c => c.Descripcion == comision).ID;                    
                     return IdCom;
                 }
                 
@@ -403,9 +352,7 @@ namespace UI.Web
                 else
                 {
                     materias = this.MateriaLogic.GetAll();
-                    idMat = materias.Find(c => c.Descripcion == materia).ID;
-                    //mat.HSSemanales = materias.Find(c => c.Descripcion == materia).HSSemanales;
-                    //mat.HSTotales = materias.Find(c => c.Descripcion == materia).HSTotales;
+                    idMat = materias.Find(c => c.Descripcion == materia).ID;                    
                     return idMat;
                 }
                 
@@ -414,108 +361,7 @@ namespace UI.Web
             {                
                 throw new Exception(ex.Message);                
             }            
-        }
-
-        public void ValidarControles()
-        {
-            
-        }
-
-                //public void LlenarListas()
-                //{
-                //    try
-                //    {
-                //        LlenarMaterias();
-                //        LLenarComisiones();
-                //        LLenarPlanes();
-                //        LLenarEspecialidades();
-                //    }
-                //    catch (Exception)
-                //    {
-
-        //        throw new Exception("Ocurrio un error al recuperar los datos de la pagina. Por favor comunicarse con el administrador.");
-        //    }
-
-        //}
-
-        //public void LLenarPlanes()
-        //{
-        //    PlanLogic data = new PlanLogic();
-        //    try
-        //    {
-        //        List<Plan> comisiones = data.GetAll();
-        //        if (comisiones.Count != 0)
-        //        {
-        //            foreach (Plan item in comisiones)
-        //            {
-        //                ddlComision.Items.Add(item.Descripcion);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            lblErrorPlan.Text = "";
-        //            lblErrorPlan.Visible = true;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //lblValidarComision.Text = string.Format("Hubo un problema al recuperar las comisiones," +
-        //        //    "por favor comunicarse con el administrador, disculpe las molestias. Para mas detalles " + ex.Message);
-        //        //lblValidarComision.Visible = true;
-        //        throw new Exception(ex.Message);
-        //    }
-        //}
-
-        //public void LLenarEspecialidades()
-        //{
-        //EspecialidadLogic data = new EspecialidadLogic();
-        //try
-        //{
-        //    List<Especialidad> comisiones = data.GetAll();
-        //    if (comisiones.Count != 0)
-        //    {
-        //        foreach (Especialidad item in comisiones)
-        //        {
-        //            ddlEspecialidad.Items.Add(item.Descripcion);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        lblErrorEsp.Text = "";
-        //        lblErrorEsp.Visible = true;
-        //    }
-        //}
-        //catch (Exception ex)
-        //{
-        //    //lblValidarComision.Text = string.Format("Hubo un problema al recuperar las Especialidades," +
-        //    //    "por favor comunicarse con el administrador, disculpe las molestias. Para mas detalles " + ex.Message);
-        //    //lblValidarComision.Visible = true;
-        //    throw new Exception(ex.Message);
-        //}
-        //}        
-
-        //public string RecuperarEspecialidades()
-        //{
-        //    string especilidad = ddlEspecialidad.SelectedValue;
-        //    if (string.IsNullOrEmpty(especilidad))
-        //    {
-        //        lblValidarMateria.Text = "Debe seleccionar una Especialidad!";
-        //        lblValidarMateria.Visible = true;
-        //        throw new Exception("Para poder seguir la operacion, deberá seleccionar una Especialidad");
-        //    }
-        //    return especilidad;
-        //}
-
-        //public string RecuperarPlanes()
-        //{
-        //    string plan = ddlPlan.SelectedValue;
-        //    if (string.IsNullOrEmpty(plan))
-        //    {
-        //        lblValidarMateria.Text = "Debe seleccionar una Plan!";
-        //        lblValidarMateria.Visible = true;
-        //        throw new Exception("Para poder seguir la operacion, deberá seleccionar una Plan");
-        //    }
-        //    return plan;
-        //}
+        }      
+  
     }
 }
