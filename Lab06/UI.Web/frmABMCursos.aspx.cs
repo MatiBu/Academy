@@ -14,6 +14,7 @@ namespace UI.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (!this.Page.User.Identity.IsAuthenticated)
             {
                 FormsAuthentication.RedirectToLoginPage();
@@ -22,9 +23,10 @@ namespace UI.Web
             if (!IsPostBack)
             {
                 LimpiarControles();
-                InhabilitarControles();
-                LoadGrid();
-                //LlenarListas();
+                InhabilitarControles();                
+                LLenarComisiones();
+                LlenarMaterias();
+                LoadGrid();                
             }
         }
 
@@ -108,19 +110,17 @@ namespace UI.Web
         public void LoadGrid()
         {
             List<Curso> todosLosCursos = this.CursoLogic.GetAll();
+
             List<Comision> todasLasComisiones = this.ComisionLogic.GetAll();
-            List<Materia> todasLasMaterias = this.MateriaLogic.GetAll();           
-        
+            List<Materia> todasLasMaterias = this.MateriaLogic.GetAll();
+
             foreach (Curso curso in todosLosCursos)
             {
                 curso.DescripcionComision = todasLasComisiones.Find(c => c.ID == curso.IDComision).Descripcion;
                 curso.DescripcionMateria = todasLasMaterias.Find(m => m.ID == curso.IDMateria).Descripcion;
             }
 
-            LLenarComisiones(todasLasComisiones);
-            //LLenarEspecialidades();
-            LlenarMaterias(todasLasMaterias);
-            if(todosLosCursos.Count != 0)
+            if (todosLosCursos.Count != 0)
             {
                 this.grvCursos.DataSource = todosLosCursos;
                 this.grvCursos.DataBind();
@@ -187,7 +187,7 @@ namespace UI.Web
         {
             txtAnioCalendario.Text = Convert.ToString(curso.AnioCalendario);
             txtCupo.Text = Convert.ToString(curso.Cupo);
-            ddlMateria.SelectedValue = ddlMateria.Items[curso.IDMateria].Text; ;
+            ddlMateria.SelectedValue = ddlMateria.Items[curso.IDMateria].Text;
             ddlComision.SelectedValue = ddlComision.Items[curso.IDComision].Text;
         }        
 
@@ -290,15 +290,16 @@ namespace UI.Web
             HabilitarControles();
         }
 
-        public void LlenarMaterias(List<Materia> cursos)
+        public void LlenarMaterias()
         {
+            List<Materia> todasLasMaterias = this.MateriaLogic.GetAll();           
             ddlMateria.Items.Add("");
             ddlMateria.SelectedValue = "";
             try
             {               
-                if (cursos.Count != 0)
+                if (todasLasMaterias.Count != 0)
                 {
-                    foreach (Materia item in cursos)
+                    foreach (Materia item in todasLasMaterias)
                     {
                         ddlMateria.Items.Insert(item.ID, item.Descripcion);                        
                     }
@@ -322,8 +323,10 @@ namespace UI.Web
 
         }
 
-        public void LLenarComisiones(List<Comision> comisiones)
+        public void LLenarComisiones()
         {
+            List<Comision> comisiones = this.ComisionLogic.GetAll();
+            //Para que por default aparezca vacio
             ddlComision.Items.Add("");
             ddlComision.SelectedValue = "";
             try
