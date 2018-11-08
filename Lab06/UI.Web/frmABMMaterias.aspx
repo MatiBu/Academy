@@ -24,7 +24,7 @@
                         <asp:BoundField DataField="Descripcion" HeaderText="Descripcion de Materia" SortExpression="Nombre" />
                         <asp:BoundField DataField="HSSemanales" HeaderText="Horas Semanales" SortExpression="Nombre" />
                         <asp:BoundField DataField="HSTotales" HeaderText="Horas Totales" />
-                        <asp:BoundField DataField="DescripcionPlan" HeaderText="Descripcion del Plan" />
+                        <asp:BoundField DataField="Plan.Descripcion" HeaderText="Descripcion del Plan" />
                         <%--<asp:BoundField DataField="DescripcionMateria" HeaderText="Materia" />--%>
                     </Columns>
                 </asp:GridView>

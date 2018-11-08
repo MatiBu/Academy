@@ -16,6 +16,10 @@ namespace UI.Web
             {
                 FormsAuthentication.RedirectToLoginPage();
             }
+            else if (!((Usuario)Session["usuario"]).ModulosPorUsuario.Find(m => m.Modulo.Descripcion == "Reportes").PermiteConsulta)
+            {
+                FormsAuthentication.RedirectToLoginPage("No está autorizado para acceder a este módulo");
+            }
         }
 
         protected void Page_Init(object sender, EventArgs e)
@@ -31,9 +35,21 @@ namespace UI.Web
             CursoLogic da = new CursoLogic();
 
             rpt = new CursosReport();
-            rpt.SetDataSource(da.GetAllCursosComisionMateria());
+            var usr = da.GetAllCursosComisionMateria();
+            rpt.SetDataSource(usr);
             CrystalReportViewer1.ReportSource = rpt;
             Session.Add("report", rpt);
         }
+    }
+
+    public class CursosComisionMaterias
+    {
+        public int AnioCalendario;
+        public int Cupo;
+        public int IDComision;
+        public int IDMateria;
+        public string DescripcionComision;
+        public string DescripcionMateria;
+        public int Horas;
     }
 }

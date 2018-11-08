@@ -18,11 +18,15 @@ namespace UI.Web
             {
                 FormsAuthentication.RedirectToLoginPage();
             }
+            else if (!((Usuario)Session["usuario"]).ModulosPorUsuario.Find(m => m.Modulo.Descripcion == "Administracion").PermiteConsulta)
+            {
+                FormsAuthentication.RedirectToLoginPage("No está autorizado para acceder a este módulo");
+            }
 
             if (!IsPostBack)
             {
                 LimpiarControles();
-                InhabilitarControles();                
+                InhabilitarControles();
                 LlenarPlanes();
                 LoadGrid();
             }
@@ -66,13 +70,13 @@ namespace UI.Web
 
         public void LoadGrid()
         {
-            List<Plan> todosLosPlanes = this.PlanLogic.GetAll();            
+            List<Plan> todosLosPlanes = this.PlanLogic.GetAll();
             List<Materia> todasLasMaterias = this.MateriaLogic.GetAll();
 
-            foreach (Materia materia in todasLasMaterias)
-            {                
-                materia.DescripcionPlan = todosLosPlanes.Find(m => m.ID == materia.IDPlan).Descripcion;
-            }
+            //foreach (Materia materia in todasLasMaterias)
+            //{
+            //    materia.DescripcionPlan = todosLosPlanes.Find(m => m.ID == materia.IDPlan).Descripcion;
+            //}
 
             if (todasLasMaterias.Count != 0)
             {
@@ -97,7 +101,7 @@ namespace UI.Web
         public void InhabilitarControles()
         {
             txtDescripcion.Enabled = false;
-            txtHoraSemanales.Enabled = false;            
+            txtHoraSemanales.Enabled = false;
             txtHorasTotales.Enabled = false;
             ddlPlanes.Enabled = false;
         }
@@ -119,7 +123,7 @@ namespace UI.Web
             lblValidaHorasSem.Visible = false;
             lblValidaHorasTotales.Visible = false;
             lblValidaPlan.Visible = false;
-            ddlPlanes.SelectedValue = "";            
+            ddlPlanes.SelectedValue = "";
         }
 
         public void ControlAObjetos(Materia materia)
@@ -154,14 +158,14 @@ namespace UI.Web
                 else
                 {
                     planes = this.PlanLogic.GetAll();
-                    idPlan = planes.Find(c => c.Descripcion == materia).ID;                    
+                    idPlan = planes.Find(c => c.Descripcion == materia).ID;
                     return idPlan;
                 }
 
             }
             catch (Exception ex)
             {
-                lblValidaPlan.Visible = true;                
+                lblValidaPlan.Visible = true;
                 throw new Exception(ex.Message);
             }
         }

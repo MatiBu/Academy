@@ -18,6 +18,10 @@ namespace UI.Web
             {
                 FormsAuthentication.RedirectToLoginPage();
             }
+            else if (!((Usuario)Session["usuario"]).ModulosPorUsuario.Find(m => m.Modulo.Descripcion == "Administracion").PermiteConsulta)
+            {
+                FormsAuthentication.RedirectToLoginPage("No está autorizado para acceder a este módulo");
+            }
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)

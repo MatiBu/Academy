@@ -1,6 +1,7 @@
 ﻿using Business.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,35 @@ namespace Data.Database
                 this.CloseConnection();
             }
             return modulos;
+        }
+
+        public Modulo GetOne(int ID)
+        {
+            Modulo module = new Modulo();
+            try
+            {
+                this.OpenConnection();
+                SqlCommand cmdModulo = new SqlCommand("select * from modulos where id_modulo = @id_modulo", sqlConn);
+                cmdModulo.Parameters.Add("@id_modulo", SqlDbType.Int).Value = ID;
+                SqlDataReader drModulo = cmdModulo.ExecuteReader();
+                if (drModulo.Read())
+                {
+                    module.ID = (int)drModulo["id_modulo"];
+                    module.Descripcion = (string)drModulo["desc_modulo"];
+                }
+                drModulo.Close();
+            }
+            catch (Exception Ex)
+            {
+                Exception ExcepcionManejada =
+                new Exception("Error al recuperar lista de modulos", Ex);
+                throw ExcepcionManejada;
+            }
+            finally
+            {
+                this.CloseConnection();
+            }
+            return module;
         }
     }
 }

@@ -60,14 +60,27 @@ namespace Data.Database
         }
         #endregion
 
-        public List<Usuario> GetAll()
+        public List<Usuario> GetAll(int tipo = 2)
         {
             // return new List<Usuario>(Usuarios);
             List<Usuario> usuarios = new List<Usuario>();
             try
             {
                 this.OpenConnection();
-                SqlCommand cmdUsuarios = new SqlCommand("select u.id_usuario, u.nombre_usuario, u.clave, u.habilitado, p.nombre, p.apellido, p.email from usuarios u left join personas p on p.id_persona = u.id_persona", sqlConn);
+                SqlCommand cmdUsuarios = new SqlCommand("", sqlConn);
+                if (tipo == 2)
+                {
+                    cmdUsuarios.CommandText = "select u.id_usuario, u.nombre_usuario, u.clave, u.habilitado, p.nombre, p.apellido, p.email " +
+                        "from usuarios u left join personas p on p.id_persona = u.id_persona";
+                }
+                else
+                {
+                    cmdUsuarios.CommandText = "select u.id_usuario, u.nombre_usuario, u.clave, u.habilitado, p.nombre, p.apellido, p.email " +
+                        "from usuarios u left join personas p on p.id_persona = u.id_persona " +
+                        "where p.tipo_persona = @tipo";
+                    cmdUsuarios.Parameters.Add("@tipo", SqlDbType.Int).Value = tipo;
+                }
+
                 SqlDataReader drUsuarios = cmdUsuarios.ExecuteReader();
                 while (drUsuarios.Read())
                 {
@@ -100,7 +113,7 @@ namespace Data.Database
         public Usuario GetOne(int ID)
         {
             //return Usuarios.Find(delegate (Usuario u) { return u.ID == ID; });
-            Usuario usr = new Usuario();            
+            Usuario usr = new Usuario();
             try
             {
                 this.OpenConnection();
@@ -135,7 +148,6 @@ namespace Data.Database
 
         public void Delete(int ID)
         {
-            // Usuarios.Remove(this.GetOne(ID));
             try
             {
                 this.OpenConnection();
@@ -235,10 +247,10 @@ namespace Data.Database
         }
 
         public void Save(Usuario usuario)
-        {  
-                // Usuarios[Usuarios.FindIndex(delegate (Usuario u) { return u.ID == usuario.ID; })] = usuario;
-                this.Update(usuario);
-            
+        {
+            // Usuarios[Usuarios.FindIndex(delegate (Usuario u) { return u.ID == usuario.ID; })] = usuario;
+            this.Update(usuario);
+
         }
 
         //public void Insert(Usuario user)
@@ -252,7 +264,12 @@ namespace Data.Database
             try
             {
                 this.OpenConnection();
-                SqlCommand cmdUsuarios = new SqlCommand("select id_modulo_usuario, id_modulo, alta, baja, modificacion from modulos_usuarios where id_usuario = @id", sqlConn);
+
+                SqlCommand cmdUsuarios = new SqlCommand("select md.id_modulo_usuario, md.alta, md.baja, md.modificacion, md.consulta, " +
+                    "m.id_modulo, m.desc_modulo " +
+                    "from modulos_usuarios md " +
+                    "left join modulos m on m.id_modulo = md.id_modulo " +
+                    "where md.id_usuario = @id", sqlConn);
                 cmdUsuarios.Parameters.Add("@id", SqlDbType.Int).Value = ID;
                 SqlDataReader drUsuarios = cmdUsuarios.ExecuteReader();
                 while (drUsuarios.Read())
@@ -263,6 +280,10 @@ namespace Data.Database
                     usr.PermiteAlta = (Boolean)drUsuarios["alta"];
                     usr.PermiteBaja = (Boolean)drUsuarios["baja"];
                     usr.PermiteModificacion = (Boolean)drUsuarios["modificacion"];
+                    usr.PermiteConsulta = (Boolean)drUsuarios["consulta"];
+                    usr.Modulo = new Modulo();
+                    usr.Modulo.ID = (int)drUsuarios["id_modulo"];
+                    usr.Modulo.Descripcion = (string)drUsuarios["desc_modulo"];
 
                     usuarios.Add(usr);
                 }
@@ -288,8 +309,8 @@ namespace Data.Database
             {
                 this.OpenConnection();
                 SqlCommand cmdLogin = new SqlCommand("SELECT * FROM usuarios u " +
-                    "LEFT JOIN personas p ON p.id_persona = u.id_persona " +
-                    "WHERE u.nombre_usuario = @nombre_usuario AND u.clave = @clave;", sqlConn);
+                "LEFT JOIN personas p ON p.id_persona = u.id_persona " +
+                "WHERE u.nombre_usuario = @nombre_usuario AND u.clave = @clave;", sqlConn);
                 cmdLogin.Parameters.Add("@nombre_usuario", SqlDbType.VarChar, 50).Value = usuario.NombreUsuario;
                 cmdLogin.Parameters.Add("@clave", SqlDbType.VarChar, 50).Value = usuario.Clave;
                 SqlDataReader loginReader = cmdLogin.ExecuteReader();
@@ -297,22 +318,23 @@ namespace Data.Database
                 {
                     usr.ID = (int)loginReader["id_usuario"];
                     usr.NombreUsuario = (string)loginReader["nombre_usuario"];
-                    usr.Clave = (string)loginReader["clave"];
                     usr.Habilitado = (Boolean)loginReader["habilitado"];
-                    usr.Nombre = (string)loginReader["nombre"];
-                    usr.Apellido = (string)loginReader["apellido"];
                     usr.EMail = (string)loginReader["email"];
                 }
                 loginReader.Close();
             }
             catch (Exception Ex)
             {
-                Exception ExcepcionManejada = new Exception("Error al modificar datos de un usuario", Ex);
+                Exception ExcepcionManejada = new Exception("Error al obtener dato del login de un usuario", Ex);
                 throw ExcepcionManejada;
             }
             finally
             {
                 this.CloseConnection();
+            }
+            if (usr != null)
+            {
+                usr.ModulosPorUsuario = this.GetModulesByUser(usr.ID);
             }
             return usr;
         }

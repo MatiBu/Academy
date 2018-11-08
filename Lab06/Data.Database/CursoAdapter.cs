@@ -17,7 +17,9 @@ namespace Data.Database
             try
             {
                 this.OpenConnection();
-                SqlCommand cmdCursos = new SqlCommand("select * from cursos", sqlConn);
+                SqlCommand cmdCursos = new SqlCommand("select * from cursos cu " +
+                    "left join comisiones co on co.id_comision = cu.id_comision " +
+                    "left join materias m on m.id_materia = cu.id_materia", sqlConn);
                 SqlDataReader drCursos = cmdCursos.ExecuteReader();
                 while (drCursos.Read())
                 {
@@ -27,6 +29,12 @@ namespace Data.Database
                     curso.Cupo = (int)drCursos["cupo"];
                     curso.IDComision = (int)drCursos["id_comision"];
                     curso.IDMateria = (int)drCursos["id_materia"];
+                    curso.Comision = new Comision();
+                    curso.Comision.ID = (int)drCursos["id_comision"];
+                    curso.Comision.Descripcion = (string)drCursos["desc_comision"];
+                    curso.Materia = new Materia();
+                    curso.Materia.ID = (int)drCursos["id_materia"];
+                    curso.Materia.Descripcion = (string)drCursos["desc_materia"];
 
                     cursos.Add(curso);
                 }

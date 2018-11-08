@@ -18,15 +18,20 @@ namespace UI.Web
             if (!this.Page.User.Identity.IsAuthenticated)
             {
                 FormsAuthentication.RedirectToLoginPage();
-            }            
+            }
+            else if (!((Usuario)Session["usuario"]).ModulosPorUsuario.Find(m => m.Modulo.Descripcion == "Administracion").PermiteConsulta)
+            {
+                FormsAuthentication.RedirectToLoginPage("No está autorizado para acceder a este módulo");
+            }
+
 
             if (!IsPostBack)
             {
                 LimpiarControles();
-                InhabilitarControles();                
+                InhabilitarControles();
                 LLenarComisiones();
                 LlenarMaterias();
-                LoadGrid();                
+                LoadGrid();
             }
         }
 
@@ -113,11 +118,11 @@ namespace UI.Web
             List<Comision> todasLasComisiones = this.ComisionLogic.GetAll();
             List<Materia> todasLasMaterias = this.MateriaLogic.GetAll();
 
-            foreach (Curso curso in todosLosCursos)
-            {
-                curso.DescripcionComision = todasLasComisiones.Find(c => c.ID == curso.IDComision).Descripcion;
-                curso.DescripcionMateria = todasLasMaterias.Find(m => m.ID == curso.IDMateria).Descripcion;
-            }
+            //foreach (Curso curso in todosLosCursos)
+            //{
+            //    curso.DescripcionComision = todasLasComisiones.Find(c => c.ID == curso.IDComision).Descripcion;
+            //    curso.DescripcionMateria = todasLasMaterias.Find(m => m.ID == curso.IDMateria).Descripcion;
+            //}
 
             if (todosLosCursos.Count != 0)
             {
@@ -128,15 +133,15 @@ namespace UI.Web
             {
                 //throw new Exception("No dispone de cursos cargados.");
             }
-            
+
         }
 
         public void InhabilitarControles()
         {
             txtCupo.Enabled = false;
-            txtAnioCalendario.Enabled = false;            
-            ddlComision.Enabled = false;            
-            ddlMateria.Enabled = false;            
+            txtAnioCalendario.Enabled = false;
+            ddlComision.Enabled = false;
+            ddlMateria.Enabled = false;
         }
 
         public void InhabilitadBotones()
@@ -150,16 +155,16 @@ namespace UI.Web
         public void HabilitarControles()
         {
             txtCupo.Enabled = true;
-            txtAnioCalendario.Enabled = true;            
-            ddlComision.Enabled = true;            
+            txtAnioCalendario.Enabled = true;
+            ddlComision.Enabled = true;
             ddlMateria.Enabled = true;
         }
 
         public void LimpiarControles()
         {
             txtCupo.Text = "";
-            txtAnioCalendario.Text = "";            
-            lblValidaCupo.Visible = false;            
+            txtAnioCalendario.Text = "";
+            lblValidaCupo.Visible = false;
             lblValidarMateria.Visible = false;
             lblValidarComision.Visible = false;
             ddlComision.DataSource = "";
@@ -168,7 +173,7 @@ namespace UI.Web
         }
 
         public void ControlAObjetos(Curso curso)
-        {            
+        {
             curso.Cupo = int.Parse(txtCupo.Text);
             curso.AnioCalendario = int.Parse(txtAnioCalendario.Text);
             curso.IDComision = RecuperarIdComision();
@@ -181,7 +186,7 @@ namespace UI.Web
             txtCupo.Text = Convert.ToString(curso.Cupo);
             ddlMateria.SelectedValue = ddlMateria.Items[curso.IDMateria].Text;
             ddlComision.SelectedValue = ddlComision.Items[curso.IDComision].Text;
-        }        
+        }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
@@ -189,22 +194,22 @@ namespace UI.Web
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
-        {            
+        {
             Curso curso = new Curso();
             var valor = (grvCursos.SelectedRow == null) ? true : false;
             int id = (valor == true) ? 0 : Convert.ToInt32(grvCursos.SelectedRow.Cells[1].Text);
 
             if (id == 0)
             {
-                
+
                 curso.State = BusinessEntity.States.New;
-                ControlAObjetos(curso);                
+                ControlAObjetos(curso);
                 this.CursoLogic.Save(curso);
                 LimpiarControles();
                 LoadGrid();
             }
             else
-            {                
+            {
                 curso.ID = id;
                 curso.State = BusinessEntity.States.Modified;
                 ControlAObjetos(curso);
@@ -246,16 +251,16 @@ namespace UI.Web
 
         public void LlenarMaterias()
         {
-            List<Materia> todasLasMaterias = this.MateriaLogic.GetAll();           
+            List<Materia> todasLasMaterias = this.MateriaLogic.GetAll();
             ddlMateria.Items.Add("");
             ddlMateria.SelectedValue = "";
             try
-            {               
+            {
                 if (todasLasMaterias.Count != 0)
                 {
                     foreach (Materia item in todasLasMaterias)
                     {
-                        ddlMateria.Items.Insert(item.ID, item.Descripcion);                        
+                        ddlMateria.Items.Insert(item.ID, item.Descripcion);
                     }
                 }
                 else
@@ -284,12 +289,12 @@ namespace UI.Web
             ddlComision.Items.Add("");
             ddlComision.SelectedValue = "";
             try
-            {                
+            {
                 if (comisiones.Count != 0)
                 {
                     foreach (Comision item in comisiones)
                     {
-                        ddlComision.Items.Insert(item.ID ,item.Descripcion);
+                        ddlComision.Items.Insert(item.ID, item.Descripcion);
                     }
                 }
                 else
@@ -298,11 +303,11 @@ namespace UI.Web
                     InhabilitarControles();
                     InhabilitadBotones();
                     lblValidarComision.Text = string.Format("No hay comisiones disponibles. Para poder agregar un nuevo curso debera agregar una comision.");
-                    lblValidarComision.Visible = true;                    
+                    lblValidarComision.Visible = true;
                 }
             }
             catch (Exception ex)
-            {                
+            {
                 throw new Exception(ex.Message);
             }
 
@@ -317,17 +322,17 @@ namespace UI.Web
                 string comision = ddlComision.SelectedValue;
                 if (string.IsNullOrEmpty(comision))
                 {
-                    lblValidarComision.Text = "Debe seleccionar una comision!";                    
-                    lblValidarComision.Text =  string.Format("Para poder seguir la operacion, deberá seleccionar una comisión");
-                    lblValidarComision.Visible = true;                    
+                    lblValidarComision.Text = "Debe seleccionar una comision!";
+                    lblValidarComision.Text = string.Format("Para poder seguir la operacion, deberá seleccionar una comisión");
+                    lblValidarComision.Visible = true;
                 }
                 else
                 {
                     comisiones = this.ComisionLogic.GetAll();
-                    IdCom = comisiones.Find(c => c.Descripcion == comision).ID;                    
+                    IdCom = comisiones.Find(c => c.Descripcion == comision).ID;
                     return IdCom;
                 }
-                
+
             }
             catch (Exception)
             {
@@ -341,7 +346,7 @@ namespace UI.Web
             List<Materia> materias = new List<Materia>();
             int idMat = 0;
             try
-            {                               
+            {
                 string materia = ddlMateria.SelectedValue;
                 if (string.IsNullOrEmpty(materia))
                 {
@@ -352,16 +357,16 @@ namespace UI.Web
                 else
                 {
                     materias = this.MateriaLogic.GetAll();
-                    idMat = materias.Find(c => c.Descripcion == materia).ID;                    
+                    idMat = materias.Find(c => c.Descripcion == materia).ID;
                     return idMat;
                 }
-                
+
             }
             catch (Exception ex)
-            {                
-                throw new Exception(ex.Message);                
-            }            
-        }      
-  
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

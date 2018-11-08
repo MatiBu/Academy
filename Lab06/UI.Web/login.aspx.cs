@@ -17,6 +17,14 @@ namespace UI.Web
             if (Page.User.Identity.IsAuthenticated)
             {
                 userName.Text = Page.User.Identity.Name;
+                if (Page.ClientQueryString != null)
+                {
+                    userNotAllow.Text = Page.ClientQueryString;
+                }
+                else
+                {
+                    userNotAllow.Text = "";
+                }
             }
         }
 
@@ -44,6 +52,7 @@ namespace UI.Web
             usuarioLogueado = Logic.Login(loginUser);
             if (usuarioLogueado != null && !String.IsNullOrEmpty(usuarioLogueado.NombreUsuario))
             {
+                Session["usuario"] = usuarioLogueado;
                 FormsAuthentication.RedirectFromLoginPage(usuarioLogueado.NombreUsuario, chkRecordar.Checked);
             }
             else

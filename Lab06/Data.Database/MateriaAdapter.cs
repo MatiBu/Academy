@@ -18,7 +18,8 @@ namespace Data.Database
             try
             {
                 this.OpenConnection();
-                SqlCommand cmdMateria = new SqlCommand("select * from materias", sqlConn);
+                SqlCommand cmdMateria = new SqlCommand("select * from materias m " +
+                    "left join planes p on p.id_plan = m.id_plan", sqlConn);
                 SqlDataReader drMaterias = cmdMateria.ExecuteReader();
                 while (drMaterias.Read())
                 {
@@ -28,6 +29,8 @@ namespace Data.Database
                     mat.HSSemanales = (int)drMaterias["hs_semanales"];
                     mat.HSTotales = (int)drMaterias["hs_totales"];
                     mat.IDPlan = (int)drMaterias["id_plan"];
+                    mat.Plan = new Plan();
+                    mat.Plan.Descripcion = (string)drMaterias["desc_plan"];
 
                     Materias.Add(mat);
                 }

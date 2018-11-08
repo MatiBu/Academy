@@ -15,6 +15,12 @@
                 <asp:Literal ID="userName" EnableViewState="false"
                     runat="server" Text=""></asp:Literal></h2>
             <asp:LinkButton ID="LinkButton1" runat="server" OnClick="desloguearse">¿Desea cerrar sesión?</asp:LinkButton>
+            <% if (Page.ClientQueryString != null)
+                { %>
+            <h4>
+                <asp:Literal ID="userNotAllow" runat="server" Text=""></asp:Literal></h4>
+            <% } %>
+
             <% }
                 else
                 { %>

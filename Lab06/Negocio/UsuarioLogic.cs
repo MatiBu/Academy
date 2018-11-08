@@ -22,11 +22,11 @@ namespace Business.Logic
             return UsuarioData.GetOne(ID);
         }
 
-        public List<Usuario> GetAll()
+        public List<Usuario> GetAll(int tipo = 2)
         {
             try
             {
-                return UsuarioData.GetAll();
+                return UsuarioData.GetAll(tipo);
             }
             catch (Exception Ex)
             {

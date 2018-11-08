@@ -12,15 +12,15 @@ namespace UI.Web
 {
     public partial class frmABMProfesores : System.Web.UI.Page
     {
-        private DocenteCursoLogic _logic;
+        private UsuarioLogic _logic;
         
-        private DocenteCursoLogic Logic
+        private UsuarioLogic Logic
         {
             get
             {
                 if (_logic == null)
                 {
-                    _logic = new DocenteCursoLogic();
+                    _logic = new UsuarioLogic();
                 }
                 return _logic;
             }
@@ -32,6 +32,11 @@ namespace UI.Web
             {
                 FormsAuthentication.RedirectToLoginPage();
             }
+            else if (!((Usuario)Session["usuario"]).ModulosPorUsuario.Find(m => m.Modulo.Descripcion == "Administracion").PermiteConsulta)
+            {
+                FormsAuthentication.RedirectToLoginPage("No está autorizado para acceder a este módulo");
+            }
+
             if (!IsPostBack)
             {
                 InhabilitarControles();
@@ -41,7 +46,7 @@ namespace UI.Web
 
         public void LoadGrid()
         {
-            this.grvDocentes.DataSource = this.Logic.GetAll();
+            this.grvDocentes.DataSource = this.Logic.GetAll(1);
             this.grvDocentes.DataBind();
         }
 
