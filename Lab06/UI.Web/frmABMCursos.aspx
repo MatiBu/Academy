@@ -6,6 +6,41 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="bodyContentPlaceHolder" runat="server">
 
+    <script>
+
+document.ready(function(){
+	valida();
+})
+
+function valida(){
+	var cupo = $('.txtCupo');
+	var anioCalendario = $('.txtAnioCalendario');	
+	var ddlMateria = $('.ddlMateria').selected.text;
+	var ddlComision = $('.ddlComision').selected.text;
+	
+	if(cupo == null){				
+	window.alert("Debe cargar el cupo del curso.");
+		return;
+	}
+	
+	if(anioCalendario == null){
+		window.alert("Debe cargar el año calendario.");
+		return;
+	}
+	
+	if(ddlMateria == null){
+		window.alert("Debe cargar una materia.");
+		return;
+	}
+	
+	if(ddlComision ==null){
+		window.alert("Debe cargar una comision.");
+		return;
+	}
+	
+}
+
+</script>
 
     <form id="form1" runat="server">
         <div class="text-center">
