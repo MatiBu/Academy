@@ -36,6 +36,20 @@ namespace Business.Logic
             }
         }
 
+        public List<Comision> GetByDescription(string desc)
+        {
+            try
+            {
+                return ComisionData.GetByDescription(desc);
+            }
+            catch (Exception Ex)
+            {
+                Exception ExcepcionManejada =
+                new Exception("Error al recuperar lista de comisiones por descripcion", Ex);
+                throw ExcepcionManejada;
+            }
+        }
+
         public void Save(Comision comision)
         {
             ComisionData.Save(comision);

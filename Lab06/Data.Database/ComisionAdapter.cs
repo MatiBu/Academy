@@ -46,7 +46,7 @@ namespace Data.Database
         }
 
 
-        public Business.Entities.Comision GetOne(int idComision)
+        public Comision GetOne(int idComision)
         {
             
             Comision comision = new Comision();
@@ -54,7 +54,10 @@ namespace Data.Database
             {
                 this.OpenConnection();
 
-                SqlCommand cmdUsuario = new SqlCommand("select * from comisiones where id_comision = @idComision", sqlConn);
+                SqlCommand cmdUsuario = new SqlCommand("select * from comisiones c " +
+                    "left join planes p on p.id_plan = c.id_plan " +
+                    "left join especialidades e on e.id_especialidad = p.id_especialidad " +
+                    "where c.id_comision = @idComision", sqlConn);
                 cmdUsuario.Parameters.Add("@idComision", SqlDbType.Int).Value = idComision;
                 SqlDataReader drComision = cmdUsuario.ExecuteReader();
                 if (drComision.Read())
@@ -63,6 +66,13 @@ namespace Data.Database
                     comision.IDPlan = (int)drComision["id_plan"];
                     comision.Descripcion = (string)drComision["desc_comision"];
                     comision.AnioEspecialidad = (int)drComision["anio_especialidad"];
+                    comision.Plan = new Plan();
+                    comision.Plan.Descripcion = (string)drComision["desc_plan"];
+                    comision.Plan.ID = (int)drComision["id_plan"];
+                    comision.Plan.IDEspecialidad = (int)drComision["id_especialidad"];
+                    comision.Plan.Especialidad = new Especialidad();
+                    comision.Plan.Especialidad.ID = (int)drComision["id_especialidad"]; ;
+                    comision.Plan.Especialidad.Descripcion = (string)drComision["desc_especialidad"];
                 }
                 drComision.Close();
             }
@@ -76,6 +86,49 @@ namespace Data.Database
                 this.CloseConnection();
             }
             return comision;
+        }
+
+        public List<Comision> GetByDescription(string desc)
+        {
+            List<Comision> Comisions = new List<Comision>();
+            try
+            {
+                this.OpenConnection();
+                SqlCommand cmdComision = new SqlCommand("select * from comisiones c " +
+                    "left join planes p on p.id_plan = c.id_plan " +
+                    "left join especialidades e on e.id_especialidad = p.id_especialidad " +
+                    "where c.desc_comision like '%'+@desc+'%'", sqlConn);
+                cmdComision.Parameters.Add("@desc", SqlDbType.VarChar, 50).Value = desc;
+                SqlDataReader drComisions = cmdComision.ExecuteReader();
+                while (drComisions.Read())
+                {
+                    Comision usr = new Comision();
+                    usr.ID = (int)drComisions["id_comision"];
+                    usr.IDPlan = (int)drComisions["id_plan"];
+                    usr.Descripcion = (string)drComisions["desc_comision"];
+                    usr.AnioEspecialidad = (int)drComisions["anio_especialidad"];
+                    usr.Plan = new Plan();
+                    usr.Plan.Descripcion = (string)drComisions["desc_plan"];
+                    usr.Plan.ID = (int)drComisions["id_plan"];
+                    usr.Plan.IDEspecialidad = (int)drComisions["id_especialidad"];
+                    usr.Plan.Especialidad = new Especialidad();
+                    usr.Plan.Especialidad.ID = (int)drComisions["id_especialidad"]; ;
+                    usr.Plan.Especialidad.Descripcion = (string)drComisions["desc_especialidad"];
+                    Comisions.Add(usr);
+                }
+                drComisions.Close();
+            }
+            catch (Exception Ex)
+            {
+                Exception ExcepcionManejada =
+                new Exception("Error al recuperar lista de comisiones", Ex);
+                throw ExcepcionManejada;
+            }
+            finally
+            {
+                this.CloseConnection();
+            }
+            return Comisions;
         }
 
         public void Delete(int idComision)
@@ -104,10 +157,10 @@ namespace Data.Database
         {
             try
             {
-                this.OpenConnection();
+                OpenConnection();
 
-                SqlCommand cmdComision = new SqlCommand("UPDATE comisiones SET id_comision = @id_comision, id_plan = @id_plan, desc_comision = @desc_comision, " +
-                    "anio_especialidad = @anio_especialidad", sqlConn);
+                SqlCommand cmdComision = new SqlCommand("UPDATE comisiones SET id_plan = @id_plan, desc_comision = @desc_comision, " +
+                    "anio_especialidad = @anio_especialidad where id_comision = @id_comision", sqlConn);
                 cmdComision.Parameters.Add("@id_comision", SqlDbType.Int).Value = Comision.ID;
                 cmdComision.Parameters.Add("@id_plan", SqlDbType.Int).Value = Comision.IDPlan;
                 cmdComision.Parameters.Add("@desc_comision", SqlDbType.VarChar, 50).Value = Comision.Descripcion;
@@ -131,16 +184,14 @@ namespace Data.Database
             {
                 this.OpenConnection();
 
-                //comisiones SET id_comision = @Dictado, id_plan = @IDCurso, desc_comision = @IDDocente, " +
-                //    "anio_especialidad = @anio_especialidad"
+                SqlCommand cmdSave = new SqlCommand("Insert into comisiones (id_plan, desc_comision, " +
+                    "anio_especialidad) values (@IdPlan, @descripcion, @anioEspecialidad", sqlConn);
 
-                SqlCommand cmdSave = new SqlCommand("Insert into comisiones (id_comision, id_plan, desc_comision, " +
-                    "anio_especialidad) values (@ID, @IdPlan, @descripcion, @anioEspecialidad", sqlConn);
-
-                cmdSave.Parameters.Add("@ID", SqlDbType.VarChar, 50).Value = Comision.ID;
                 cmdSave.Parameters.Add("@IdPlan", SqlDbType.Int).Value = Comision.IDPlan;
                 cmdSave.Parameters.Add("@descripcion", SqlDbType.VarChar, 50).Value = Comision.Descripcion;
                 cmdSave.Parameters.Add("@anioEspecialidad", SqlDbType.Int).Value = Comision.AnioEspecialidad;
+                cmdSave.ExecuteNonQuery();
+
             }
             catch (Exception Ex)
             {
@@ -157,26 +208,15 @@ namespace Data.Database
         {
             if (Comision.State == BusinessEntity.States.New)
             {
-                // int NextIDCurso = 0;
-                // foreach (Usuario usr in Usuarios)
-                // {
-                //  if (usr.IDPlan > NextIDCurso)
-                // {
-                //  NextIDCurso = usr.IDPlan;
-                // }
-                // }
-                // usuario.IDCurso = NextIDCurso + 1;
-                // Usuarios.Add(usuario);
-                this.Insert(Comision);
+                Insert(Comision);
             }
             else if (Comision.State == BusinessEntity.States.Deleted)
             {
-                this.Delete(Comision.ID);
+                Delete(Comision.ID);
             }
             else if (Comision.State == BusinessEntity.States.Modified)
             {
-                // Usuarios[Usuarios.FindIndex(delegate (Usuario u) { return u.IDCurso == usuario.IDCurso; })] = usuario;
-                this.Update(Comision);
+                Update(Comision);
             }
             Comision.State = BusinessEntity.States.Unmodified;
         }

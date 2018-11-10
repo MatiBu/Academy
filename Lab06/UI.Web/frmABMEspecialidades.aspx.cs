@@ -17,7 +17,7 @@ namespace UI.Web
             {
                 FormsAuthentication.RedirectToLoginPage();
             }
-            else if (!((Usuario)Session["usuario"]).ModulosPorUsuario.Find(m => m.Modulo.Descripcion == "Administracion").PermiteConsulta)
+            else if (((Usuario)Session["usuario"]) != null && ((Usuario)Session["usuario"]).ModulosPorUsuario != null && !((Usuario)Session["usuario"]).ModulosPorUsuario.Find(m => m.Modulo.Descripcion == "Administracion").PermiteConsulta)
             {
                 FormsAuthentication.RedirectToLoginPage("No está autorizado para acceder a este módulo");
             }

@@ -72,6 +72,10 @@ namespace Data.Database
                     alum.Telefono = (string)drAlumnos["telefono"];
                     alum.FechaNacimiento = (DateTime)drAlumnos["fecha_nac"];
                     alum.IDPlan = (int)drAlumnos["id_plan"];
+                    alum.Plan = new Plan();
+                    alum.Plan.ID = (int)drAlumnos["id_plan"];
+                    alum.Plan.Descripcion = (string)drAlumnos["desc_plan"];
+                    alum.Plan.IDEspecialidad = (int)drAlumnos["id_especialidad"];
                     alum.IDEspecialidad = (int)drAlumnos["id_especialidad"];
                 }
                 drAlumnos.Close();
@@ -86,6 +90,45 @@ namespace Data.Database
                 this.CloseConnection();
             }
             return alum;
+        }
+
+        public List<Alumno> GetByApellido(string apellido)
+        {
+            List<Alumno> alumnos = new List<Alumno>();
+            try
+            {
+                this.OpenConnection();
+
+                SqlCommand cmdAlumno = new SqlCommand("select * from personas p " +
+                    "LEFT JOIN planes pl on pl.id_plan = p.id_plan "+
+                    "where p.apellido like '%'+@apellido+'%'", sqlConn);
+                cmdAlumno.Parameters.Add("@apellido", SqlDbType.VarChar, 50).Value = apellido;
+                SqlDataReader drAlumnos = cmdAlumno.ExecuteReader();
+                while (drAlumnos.Read())
+                {
+                    Alumno alum = new Alumno();
+                    alum.ID = (int)drAlumnos["id_persona"];
+                    alum.Legajo = (int)drAlumnos["legajo"];
+                    alum.Nombre = (string)drAlumnos["nombre"];
+                    alum.Apellido = (string)drAlumnos["apellido"];
+                    alum.Plan = new Plan();
+                    alum.Plan.ID = (int)drAlumnos["id_plan"];
+                    alum.Plan.Descripcion = (string)drAlumnos["desc_plan"];
+
+                    alumnos.Add(alum);
+                }
+                drAlumnos.Close();
+            }
+            catch (Exception Ex)
+            {
+                Exception ExcepcionManejada = new Exception("Error al recuperar un alumno por id", Ex);
+                throw ExcepcionManejada;
+            }
+            finally
+            {
+                this.CloseConnection();
+            }
+            return alumnos;
         }
 
         public void Delete(int ID)
