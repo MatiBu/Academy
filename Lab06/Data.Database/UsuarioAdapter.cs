@@ -116,7 +116,7 @@ namespace Data.Database
             Usuario usr = new Usuario();
             try
             {
-                this.OpenConnection();
+                this.OpenConnection();                
 
                 SqlCommand cmdUsuario = new SqlCommand("select u.id_usuario, u.nombre_usuario, u.clave, u.habilitado, p.nombre, p.apellido, p.email from usuarios u left join personas p on p.id_persona = u.id_persona where u.id_usuario = @id", sqlConn);
                 cmdUsuario.Parameters.Add("@id", SqlDbType.Int).Value = ID;
@@ -152,17 +152,33 @@ namespace Data.Database
             {
                 this.OpenConnection();
 
+                SqlTransaction transaction;
+
+                transaction = sqlConn.BeginTransaction();
+
                 SqlCommand cmdDelete = new SqlCommand("select id_persona from usuarios where id_usuario = @id", sqlConn);
                 cmdDelete.Parameters.Add("@id", SqlDbType.Int).Value = ID;
-                var id_persona = cmdDelete.ExecuteScalar();
+                cmdDelete.Transaction = transaction;
+                try
+                {
+                    var id_persona = cmdDelete.ExecuteScalar();
 
-                cmdDelete.CommandText = "delete usuarios where id_usuario = @id";
-                cmdDelete.ExecuteNonQuery();
-                cmdDelete.Parameters.Clear();
+                    cmdDelete.CommandText = "delete usuarios where id_usuario = @id";
+                    cmdDelete.ExecuteNonQuery();
+                    cmdDelete.Parameters.Clear();
 
-                cmdDelete.CommandText = "delete personas where id_persona = @id";
-                cmdDelete.Parameters.Add("@id", SqlDbType.Int).Value = id_persona;
-                cmdDelete.ExecuteNonQuery();
+                    cmdDelete.CommandText = "delete personas where id_persona = @id";
+                    cmdDelete.Parameters.Add("@id", SqlDbType.Int).Value = id_persona;
+                    cmdDelete.ExecuteNonQuery();
+
+                    transaction.Commit();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+               
 
             }
             catch (Exception Ex)
