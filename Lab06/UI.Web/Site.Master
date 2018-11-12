@@ -44,7 +44,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="docDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Docentes
                             </a>
                             <div class="dropdown-menu " aria-labelledby="navbarDropdown">
-                                <a href="/frmInscripcionACursos.aspx" class="dropdown-item">Inscripción a Cursos</a>
+                                <%--<a href="/frmInscripcionACursos.aspx" class="dropdown-item">Inscripción a Cursos</a>--%>
                                 <a href="/frmRegistroNotas.aspx" class="dropdown-item">Registrar Notas</a>
                             </div>
                         </li>
@@ -53,8 +53,8 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a href="/frmReporteCursos.aspx" class="dropdown-item">Reporte Cursos</a>
-                                <a href="/frmReporteMejoresPromedios.aspx" class="dropdown-item">Reporte Mejores Promedios</a>
-                                <a href="/frmReportePlanes.aspx" class="dropdown-item">Reporte Planes</a>
+                                <%--<a href="/frmReporteMejoresPromedios.aspx" class="dropdown-item">Reporte Mejores Promedios</a>
+                                <a href="/frmReportePlanes.aspx" class="dropdown-item">Reporte Planes</a>--%>
                             </div>
                         </li>
                     </ul>

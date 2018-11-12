@@ -338,5 +338,28 @@ namespace Data.Database
             }
             return usr;
         }
+
+        public bool ValidateUnique(Usuario usuario)
+        {
+            try
+            {
+                this.OpenConnection();
+                SqlCommand cmdLogin = new SqlCommand("COUNT * FROM usuarios u " +
+                "WHERE u.nombre_usuario = @nombre_usuario AND u.email = @email;", sqlConn);
+                cmdLogin.Parameters.Add("@email", SqlDbType.VarChar, 50).Value = usuario.EMail;
+                cmdLogin.Parameters.Add("@nombre_usuario", SqlDbType.VarChar, 50).Value = usuario.NombreUsuario;
+
+                return Boolean.Parse((string)cmdLogin.ExecuteScalar());
+            }
+            catch (Exception Ex)
+            {
+                Exception ExcepcionManejada = new Exception("Error al obtener dato del login de un usuario", Ex);
+                throw ExcepcionManejada;
+            }
+            finally
+            {
+                this.CloseConnection();
+            }
+        }
     }
 }

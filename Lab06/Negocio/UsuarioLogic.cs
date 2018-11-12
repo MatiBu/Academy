@@ -48,7 +48,10 @@ namespace Business.Logic
 
         public void Insert(Usuario user)
         {
-            UsuarioData.Insert(user);
+            if (ValidateUnique(user))
+            {
+                UsuarioData.Insert(user);
+            }
         }
 
         public List<ModuloUsuario> GetModulesByUser(int ID)
@@ -59,6 +62,11 @@ namespace Business.Logic
         public Usuario Login(Usuario usuario)
         {
             return UsuarioData.Login(usuario);
+        }
+
+        public bool ValidateUnique(Usuario usuario)
+        {
+            return UsuarioData.ValidateUnique(usuario);
         }
 
     }
