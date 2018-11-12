@@ -218,15 +218,13 @@ namespace UI.Web
                 this.PlanLogic.Save(plan);
                 LimpiarControles();
                 LoadGrid();
-            }
+            }            
+            //else if (((Usuario)Session["usuario"]) != null && ((Usuario)Session["usuario"]).ModulosPorUsuario != null && !((Usuario)Session["usuario"]).ModulosPorUsuario.Find(m => m.Modulo.Descripcion == "Administracion").PermiteConsulta)
+            //{
+            //    FormsAuthentication.RedirectToLoginPage("No está autorizado para acceder a este módulo");
+            //}
             else
             {
-                FormsAuthentication.RedirectToLoginPage();
-            }
-            else if (((Usuario)Session["usuario"]) != null && ((Usuario)Session["usuario"]).ModulosPorUsuario != null && !((Usuario)Session["usuario"]).ModulosPorUsuario.Find(m => m.Modulo.Descripcion == "Administracion").PermiteConsulta)
-            {
-                FormsAuthentication.RedirectToLoginPage("No está autorizado para acceder a este módulo");
-            }
                 plan.ID = id;
                 plan.State = BusinessEntity.States.Modified;
                 ControlAObjetos(plan);
@@ -234,6 +232,7 @@ namespace UI.Web
                 LimpiarControles();
                 LoadGrid();
             }
+            
             LimpiarControles();
             InhabilitarControles();
         }
