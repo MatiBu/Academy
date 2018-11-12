@@ -14,14 +14,14 @@ namespace UI.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!this.Page.User.Identity.IsAuthenticated)
-            //{
-            //    FormsAuthentication.RedirectToLoginPage();
-            //}
-            //else if (!((Usuario)Session["usuario"]).ModulosPorUsuario.Find(m => m.Modulo.Descripcion == "Administracion").PermiteConsulta)
-            //{
-            //    FormsAuthentication.RedirectToLoginPage("No está autorizado para acceder a este módulo");
-            //}
+            if (!this.Page.User.Identity.IsAuthenticated)
+            {
+                FormsAuthentication.RedirectToLoginPage();
+            }
+            else if (!((Usuario)Session["usuario"]).ModulosPorUsuario.Find(m => m.Modulo.Descripcion == "Administracion").PermiteConsulta)
+            {
+                FormsAuthentication.RedirectToLoginPage("No está autorizado para acceder a este módulo");
+            }
 
             if (!IsPostBack)
             {
