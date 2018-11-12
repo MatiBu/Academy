@@ -81,38 +81,20 @@ function valida(){
                     <asp:Label ID="lblAñoCalendario" runat="server" ForeColor="Red"></asp:Label>
                 </div>
             </div>
-            <%--<div class="form-group row">
-                <asp:Label class="col-5 col-form-label" ID="lblAnioCalendario0" runat="server" Text="Camision: "></asp:Label>
-                <div class="col-7">
-                    <asp:TextBox class="form-control" ID="txtComision" runat="server"></asp:TextBox>
-                    <asp:Label ID="lblValidaCom" runat="server" Text=""></asp:Label>
-                    <br />
-                </div>
-            </div>
-            <div class="form-group row">
-                <asp:Label class="col-5 col-form-label" ID="Materia" runat="server" Text="Materia: "></asp:Label>
-                <div class="col-7">
-                    <asp:TextBox class="form-control" ID="txtMateria" runat="server"></asp:TextBox>
-                    <asp:Label ID="lblValidaMat" runat="server" Text=""></asp:Label>
-                    <br />
-                </div>
-            </div>--%>
             <div class="form-group row">
                 <asp:Label class="col-5 col-form-label" ID="Label1" runat="server" Text="Materia: "></asp:Label>
                 <div class="col-7">
-                    <asp:dropDownList class="form-control" ID="ddlMateria" runat="server" Width="105px"></asp:dropDownList>
+                    <asp:DropDownList class="form-control" ID="ddlMateria" runat="server"></asp:DropDownList>
                     <asp:Label ID="lblValidarMateria" runat="server" ForeColor="Red"></asp:Label>
-                    <br />
                 </div>
             </div>
             <div class="form-group row">
                 <asp:Label class="col-5 col-form-label" ID="Label2" runat="server" Text="Comision: "></asp:Label>
                 <div class="col-7">
-                    <asp:dropDownList class="form-control" ID="ddlComision" runat="server" Width="105px"></asp:dropDownList>
+                    <asp:DropDownList class="form-control" ID="ddlComision" runat="server"></asp:DropDownList>
                     <asp:Label ID="lblValidarComision" runat="server" ForeColor="Red"></asp:Label>
-                    <br />
                 </div>
-            </div>           
+            </div>
         </div>
         <div class="d-flex">
             <asp:Button class="ml-auto mr-2 btn btn-default" ID="btnAgregar" runat="server" Text="Agregar" OnClick="btnAgregar_Click" />

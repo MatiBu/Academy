@@ -48,24 +48,34 @@ namespace Data.Database
         }
 
 
-        public Business.Entities.AlumnoInscripciones GetOne(int idInscripcion)
+        public List<AlumnoInscripciones> GetOneByAlumno(int idAlumno)
         {
 
-            AlumnoInscripciones usr = new AlumnoInscripciones();
+            List<AlumnoInscripciones> alumnoInscripciones = new List<AlumnoInscripciones>();
             try
             {
                 this.OpenConnection();
 
-                SqlCommand cmdUsuario = new SqlCommand("select * from alumnos_inscripciones where id_inscripcion = @idInscripcion", sqlConn);
-                cmdUsuario.Parameters.Add("@idInscripcion", SqlDbType.Int).Value = idInscripcion;
+                SqlCommand cmdUsuario = new SqlCommand("select * from alumnos_inscripciones ai " +
+                    "LEFT JOIN cursos c on c.id_curso = ai.id_curso " +
+                    "LEFT JOIN materias m on m.id_materia = c.id_materia " +
+                    "where ai.id_alumno = @idAlumno", sqlConn);
+                cmdUsuario.Parameters.Add("@idAlumno", SqlDbType.Int).Value = idAlumno;
                 SqlDataReader drAlumnoInscripciones = cmdUsuario.ExecuteReader();
-                if (drAlumnoInscripciones.Read())   
-                {                    
+                while (drAlumnoInscripciones.Read())
+                {
+                    AlumnoInscripciones usr = new AlumnoInscripciones();
                     usr.ID = (int)drAlumnoInscripciones["id_inscripcion"];
                     usr.Condicion = (string)drAlumnoInscripciones["condicion"];
                     usr.IDAlumno = (int)drAlumnoInscripciones["id_alumno"];
                     usr.IDCurso = (int)drAlumnoInscripciones["id_curso"];
                     usr.Nota = (int)drAlumnoInscripciones["nota"];
+                    usr.Curso = new Curso();
+                    usr.Curso.IDMateria = (int)drAlumnoInscripciones["id_materia"];
+                    usr.Curso.Materia = new Materia();
+                    usr.Curso.Materia.Descripcion = (string)drAlumnoInscripciones["desc_materia"];
+
+                    alumnoInscripciones.Add(usr);
                 }
                 drAlumnoInscripciones.Close();
             }
@@ -78,7 +88,7 @@ namespace Data.Database
             {
                 this.CloseConnection();
             }
-            return usr;
+            return alumnoInscripciones;
         }
 
         public void Delete(int idInscripcion)
@@ -116,7 +126,7 @@ namespace Data.Database
                 cmdComision.Parameters.Add("@id_alumno", SqlDbType.Int).Value = Comision.Descripcion;
                 cmdComision.Parameters.Add("@id_curso", SqlDbType.Int).Value = Comision.AnioEspecialidad;
                 cmdComision.Parameters.Add("@nota", SqlDbType.Int).Value = Comision.AnioEspecialidad;
-                cmdComision.ExecuteNonQuery();               
+                cmdComision.ExecuteNonQuery();
 
             }
             catch (Exception Ex)
@@ -135,7 +145,7 @@ namespace Data.Database
             try
             {
                 this.OpenConnection();
-                
+
                 SqlCommand cmdSave = new SqlCommand("Insert into comisiones (id_inscripcion, condicion, id_alumno, " +
                     "id_curso, nota) values (@id_inscripcion, @condicion, @id_alumno, @id_curso, @nota", sqlConn);
 

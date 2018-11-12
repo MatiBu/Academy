@@ -17,9 +17,9 @@ namespace Business.Logic
             AlumnoInscripcionesData = new AlumnoInscripcionesAdapter();
         }
 
-        public AlumnoInscripciones GetOne(int ID)
+        public List<AlumnoInscripciones> GetOneByAlumno(int ID)
         {
-            return AlumnoInscripcionesData.GetOne(ID);
+            return AlumnoInscripcionesData.GetOneByAlumno(ID);
         }
 
         public List<AlumnoInscripciones> GetAll()

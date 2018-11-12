@@ -9,10 +9,10 @@ using Business.Entities;
 using System.Web.Security;
 
 namespace UI.Web
-{ 
+{
 
     public partial class Usuarios : System.Web.UI.Page
-    {        
+    {
 
         public FormModes FormMode
         {
@@ -20,7 +20,7 @@ namespace UI.Web
             set { this.ViewState["FormMode"] = value; }
         }
 
-        public Usuario Entity { get; set; }       
+        public Usuario Entity { get; set; }
 
         UsuarioLogic _logic;
 
@@ -28,7 +28,7 @@ namespace UI.Web
         {
             get
             {
-                if(this.ViewState["SelectedID"] != null)
+                if (this.ViewState["SelectedID"] != null)
                 {
                     return (int)this.ViewState["SeletedID"];
                 }
@@ -69,7 +69,7 @@ namespace UI.Web
             {
                 FormsAuthentication.RedirectToLoginPage();
             }
-            else if (!((Usuario)Session["usuario"]).ModulosPorUsuario.Find(m => m.Modulo.Descripcion == "Administracion").PermiteConsulta)
+            else if (((Usuario)Session["usuario"]) != null && ((Usuario)Session["usuario"]).ModulosPorUsuario != null && !((Usuario)Session["usuario"]).ModulosPorUsuario.Find(m => m.Modulo.Descripcion == "Administracion").PermiteConsulta)
             {
                 FormsAuthentication.RedirectToLoginPage("No está autorizado para acceder a este módulo");
             }
@@ -93,9 +93,9 @@ namespace UI.Web
 
         public void LoadGrid()
         {
-            this.grvUsuarios.DataSource = this.Logic.GetAll();            
+            this.grvUsuarios.DataSource = this.Logic.GetAll();
             this.grvUsuarios.DataBind();
-        }       
+        }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
@@ -117,23 +117,23 @@ namespace UI.Web
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
             HabilitarControles();
-            if(txtApellido.Enabled == true)
+            if (txtApellido.Enabled == true)
             {
                 Usuario usuario = new Usuario();
                 //usuario.State = BusinessEntity.States.Modified;
                 UsuarioLogic guardarUsuario = new UsuarioLogic();
                 ControlAObjetos(usuario);
-                this.Logic.Insert(usuario);                
+                this.Logic.Insert(usuario);
                 LimpiarControles();
                 LoadGrid();
             }
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
-        {            
+        {
             Usuario usuario = new Usuario();
             //usuario.State = BusinessEntity.States.Modified;
-            
+
             ControlAObjetos(usuario);
             this.Logic.Save(usuario);
             LimpiarControles();
@@ -142,7 +142,7 @@ namespace UI.Web
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-            Usuario usuario = new Usuario();            
+            Usuario usuario = new Usuario();
             usuario.ID = int.Parse(grvUsuarios.SelectedRow.Cells[1].Text);
             usuario.State = BusinessEntity.States.Deleted;
             this.Logic.Delete(usuario.ID);
@@ -156,7 +156,7 @@ namespace UI.Web
         }
 
         protected void grvUsuarios_SelectedIndexChanged(object sender, EventArgs e)
-        {            
+        {
             Usuario usuario = new Usuario();
             var id = int.Parse(grvUsuarios.SelectedRow.Cells[1].Text);
             usuario = this.Logic.GetOne(id);
@@ -176,7 +176,7 @@ namespace UI.Web
         }
 
         public void ControlAObjetos(Usuario usuario)
-        {            
+        {
             usuario.Nombre = txtNombre.Text;
             usuario.Apellido = txtApellido.Text;
             usuario.EMail = txtEmail.Text;
@@ -219,6 +219,6 @@ namespace UI.Web
             cbHabilitado.Checked = false;
         }
 
-        
+
     }
 }

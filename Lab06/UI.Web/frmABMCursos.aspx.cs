@@ -19,7 +19,7 @@ namespace UI.Web
             {
                 FormsAuthentication.RedirectToLoginPage();
             }
-            else if (!((Usuario)Session["usuario"]).ModulosPorUsuario.Find(m => m.Modulo.Descripcion == "Administracion").PermiteConsulta)
+            else if (((Usuario)Session["usuario"]) != null && ((Usuario)Session["usuario"]).ModulosPorUsuario != null && !((Usuario)Session["usuario"]).ModulosPorUsuario.Find(m => m.Modulo.Descripcion == "Administracion").PermiteConsulta)
             {
                 FormsAuthentication.RedirectToLoginPage("No está autorizado para acceder a este módulo");
             }
@@ -35,45 +35,45 @@ namespace UI.Web
             }
         }
 
-        public FormModes FormMode
-        {
-            get => (FormModes)this.ViewState["FormMode"];
-            set { this.ViewState["FormMode"] = value; }
-        }
+        //public FormModes FormMode
+        //{
+        //    get => (FormModes)this.ViewState["FormMode"];
+        //    set { this.ViewState["FormMode"] = value; }
+        //}
 
-        public Curso Entity { get; set; }
+        //public Curso Entity { get; set; }
 
         CursoLogic _cursoLogic;
         ComisionLogic _comisionLogic;
         MateriaLogic _materiaLogic;
         //private object _especialidadLogic;
 
-        private int SelectID
-        {
-            get
-            {
-                if (this.ViewState["SelectedID"] != null)
-                {
-                    return (int)this.ViewState["SeletedID"];
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-            set
-            {
-                this.ViewState["SelectID"] = value;
-            }
-        }
+        //private int SelectID
+        //{
+        //    get
+        //    {
+        //        if (this.ViewState["SelectedID"] != null)
+        //        {
+        //            return (int)this.ViewState["SeletedID"];
+        //        }
+        //        else
+        //        {
+        //            return 0;
+        //        }
+        //    }
+        //    set
+        //    {
+        //        this.ViewState["SelectID"] = value;
+        //    }
+        //}
 
-        private bool IsEntitySelected
-        {
-            get
-            {
-                return (this.SelectID != 0);
-            }
-        }
+        //private bool IsEntitySelected
+        //{
+        //    get
+        //    {
+        //        return (this.SelectID != 0);
+        //    }
+        //}
 
         private CursoLogic CursoLogic
         {

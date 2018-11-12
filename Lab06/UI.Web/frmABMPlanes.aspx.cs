@@ -221,6 +221,12 @@ namespace UI.Web
             }
             else
             {
+                FormsAuthentication.RedirectToLoginPage();
+            }
+            else if (((Usuario)Session["usuario"]) != null && ((Usuario)Session["usuario"]).ModulosPorUsuario != null && !((Usuario)Session["usuario"]).ModulosPorUsuario.Find(m => m.Modulo.Descripcion == "Administracion").PermiteConsulta)
+            {
+                FormsAuthentication.RedirectToLoginPage("No está autorizado para acceder a este módulo");
+            }
                 plan.ID = id;
                 plan.State = BusinessEntity.States.Modified;
                 ControlAObjetos(plan);

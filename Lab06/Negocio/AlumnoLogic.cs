@@ -22,6 +22,20 @@ namespace Business.Logic
             return AlumnoData.GetOne(ID);
         }
 
+        public List<Alumno> GetByApellido(string apellido)
+        {
+            try
+            {
+                return AlumnoData.GetByApellido(apellido);
+            }
+            catch (Exception Ex)
+            {
+                Exception ExcepcionManejada =
+                new Exception("Error al recuperar lista de alumnos", Ex);
+                throw ExcepcionManejada;
+            }
+        }
+
         public List<Alumno> GetAll()
         {
             try
