@@ -51,7 +51,7 @@ namespace Data.Database
             {
                 this.OpenConnection();
 
-                SqlCommand cmdEspecialidad = new SqlCommand("select * from especialidades where id_especialidad = @idEspecialidad", sqlConn);
+                SqlCommand cmdEspecialidad = new SqlCommand("select * from especialidades where id_especialidad = @id_especialidad", sqlConn);
                 cmdEspecialidad.Parameters.Add("@id_especialidad", SqlDbType.Int).Value = idEspecialidad;
                 SqlDataReader drEspecialidad = cmdEspecialidad.ExecuteReader();
                 if (drEspecialidad.Read())
@@ -102,7 +102,9 @@ namespace Data.Database
             {
                 this.OpenConnection();
 
-                SqlCommand cmdEspecialidad = new SqlCommand("UPDATE especialidades SET id_especialidad = @ID, desc_especialidad = @desc, id_especialidad = @idEsp, ", sqlConn);
+                SqlCommand cmdEspecialidad = new SqlCommand("UPDATE especialidades "+
+                    "SET desc_especialidad = @desc "+
+                    "where id_especialidad = @ID", sqlConn);
                 cmdEspecialidad.Parameters.Add("@ID", SqlDbType.Int).Value = especialidad.ID;
                 cmdEspecialidad.Parameters.Add("@desc", SqlDbType.VarChar, 50).Value = especialidad.Descripcion;
                 cmdEspecialidad.ExecuteNonQuery();
@@ -124,11 +126,11 @@ namespace Data.Database
             {
                 this.OpenConnection();
 
-                SqlCommand cmdSave = new SqlCommand("Insert into especialidades (id_especialidad, desc_especialidad, id_especialidad)" +
-                    " values (@ID, @desc, @idEsp", sqlConn);
-
-                cmdSave.Parameters.Add("@ID", SqlDbType.VarChar, 50).Value = especialidad.ID;
-                cmdSave.Parameters.Add("@desc", SqlDbType.VarChar, 50).Value = especialidad.Descripcion;
+                SqlCommand cmdSave = new SqlCommand("Insert into especialidades (desc_especialidad)" +
+                    " values (@desc_especialidad)" +
+                    "select @@identity", sqlConn);                
+                cmdSave.Parameters.Add("@desc_especialidad", SqlDbType.VarChar, 50).Value = especialidad.Descripcion;
+                especialidad.ID = Decimal.ToInt32((decimal)cmdSave.ExecuteScalar());
             }
             catch (Exception Ex)
             {
