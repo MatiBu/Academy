@@ -47,6 +47,56 @@ namespace Data.Database
             return alumnoInscripciones;
         }
 
+        public List<AlumnoInscripciones> BuscarAlumnos(int carrera, int materia, string comision)
+        {
+            List<AlumnoInscripciones> alumnoInscripciones = new List<AlumnoInscripciones>();
+            try
+            {
+                this.OpenConnection();
+                SqlCommand cmdAlumnoInscripciones = new SqlCommand("select * from alumnos_inscripciones ai " +
+                    "left join cursos c on c.id_curso = ai.id_curso " +
+                    "left join comisiones co on co.id_comision = c.id_comision " +
+                    "left join materias m on m.id_materia = c.id_materia " +
+                    "left join personas p on p.id_persona = ai.id_alumno " +
+                    "where c.id_materia = @idMateria and co.desc_comision = @comision", sqlConn);
+                cmdAlumnoInscripciones.Parameters.Add("@idCarrera", SqlDbType.Int).Value = carrera;
+                cmdAlumnoInscripciones.Parameters.Add("@idMateria", SqlDbType.Int).Value = materia;
+                cmdAlumnoInscripciones.Parameters.Add("@comision", SqlDbType.VarChar).Value = comision;
+                SqlDataReader drAlumnoInscripciones = cmdAlumnoInscripciones.ExecuteReader();
+                while (drAlumnoInscripciones.Read())
+                {
+                    AlumnoInscripciones usr = new AlumnoInscripciones();
+                    usr.ID = (int)drAlumnoInscripciones["id_inscripcion"];
+                    usr.Condicion = (string)drAlumnoInscripciones["condicion"];
+                    usr.IDAlumno = (int)drAlumnoInscripciones["id_alumno"];
+                    usr.IDCurso = (int)drAlumnoInscripciones["id_curso"];
+                    usr.Nota = (int)drAlumnoInscripciones["nota"];
+                    usr.Curso = new Curso();
+                    usr.Curso.Materia = new Materia();
+                    usr.Curso.ID = (int)drAlumnoInscripciones["id_curso"];
+                    usr.Curso.IDComision = (int)drAlumnoInscripciones["id_comision"];
+                    usr.Curso.Materia.ID = (int)drAlumnoInscripciones["id_materia"];
+                    usr.Curso.Materia.Descripcion = (string)drAlumnoInscripciones["desc_materia"];
+                    usr.Alumno = new Alumno();
+                    usr.Alumno.Apellido = (string)drAlumnoInscripciones["apellido"];
+                    usr.Alumno.Nombre = (string)drAlumnoInscripciones["nombre"];
+                    alumnoInscripciones.Add(usr);
+                }
+                drAlumnoInscripciones.Close();
+            }
+            catch (Exception Ex)
+            {
+                Exception ExcepcionManejada =
+                new Exception("Error al recuperar lista de Inscripciones", Ex);
+                throw ExcepcionManejada;
+            }
+            finally
+            {
+                this.CloseConnection();
+            }
+            return alumnoInscripciones;
+        }
+
 
         public List<AlumnoInscripciones> GetOneByAlumno(int idAlumno)
         {
@@ -192,6 +242,35 @@ namespace Data.Database
                 this.Update(alumnoInscripciones);
             }
             alumnoInscripciones.State = BusinessEntity.States.Unmodified;
+        }
+
+        public void SaveAll(List<AlumnoInscripciones> alumnosInscripciones)
+        {
+            foreach (AlumnoInscripciones alumnoInscripciones in alumnosInscripciones)
+            {
+                try
+                {
+                    this.OpenConnection();
+
+                    SqlCommand cmdComision = new SqlCommand("UPDATE alumnos_inscripciones SET condicion = @condicion, nota = @nota " +
+                        "where id_inscripcion = @id_inscripcion", sqlConn);
+                    cmdComision.Parameters.Add("@id_inscripcion", SqlDbType.Int).Value = alumnoInscripciones.ID;
+                    cmdComision.Parameters.Add("@condicion", SqlDbType.VarChar, 50).Value = alumnoInscripciones.Condicion;
+                    cmdComision.Parameters.Add("@nota", SqlDbType.Int).Value = alumnoInscripciones.Nota;
+                    cmdComision.ExecuteNonQuery();
+
+                }
+                catch (Exception Ex)
+                {
+                    Exception ExcepcionManejada = new Exception("Error al modificar datos de un la Inscripcion del alumno", Ex);
+                    throw ExcepcionManejada;
+                }
+                finally
+                {
+                    this.CloseConnection();
+                }
+            }
+
         }
 
         private void Update(AlumnoInscripciones alumnoInscripciones)

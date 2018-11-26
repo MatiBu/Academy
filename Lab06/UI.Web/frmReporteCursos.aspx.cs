@@ -35,8 +35,6 @@ namespace UI.Web
             CursoLogic da = new CursoLogic();
 
             rpt = new CursosReport();
-            //var usr = da.GetAllCursosComisionMateria();
-            //rpt.SetDataSource();
             CrystalReportViewer1.ReportSource = rpt;
             Session.Add("report", rpt);
         }

@@ -360,7 +360,7 @@ namespace Data.Database
             try
             {
                 this.OpenConnection();
-                SqlCommand cmdLogin = new SqlCommand("COUNT * FROM usuarios u " +
+                SqlCommand cmdLogin = new SqlCommand("select count(*) FROM usuarios u " +
                 "WHERE u.nombre_usuario = @nombre_usuario AND u.email = @email;", sqlConn);
                 cmdLogin.Parameters.Add("@email", SqlDbType.VarChar, 50).Value = usuario.EMail;
                 cmdLogin.Parameters.Add("@nombre_usuario", SqlDbType.VarChar, 50).Value = usuario.NombreUsuario;

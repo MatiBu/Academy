@@ -31,7 +31,21 @@ namespace Business.Logic
             catch (Exception Ex)
             {
                 Exception ExcepcionManejada =
-                new Exception("Error al recuperar lista de usuarios", Ex);
+                new Exception("Error al recuperar lista de alumnos", Ex);
+                throw ExcepcionManejada;
+            }
+        }
+
+        public List<AlumnoInscripciones> BuscarAlumnos(int carrera, int materia, string comision)
+        {
+            try
+            {
+                return AlumnoInscripcionesData.BuscarAlumnos(carrera, materia, comision);
+            }
+            catch (Exception Ex)
+            {
+                Exception ExcepcionManejada =
+                new Exception("Error al recuperar lista de alumnos", Ex);
                 throw ExcepcionManejada;
             }
         }
@@ -39,6 +53,11 @@ namespace Business.Logic
         public void Save(AlumnoInscripciones alumnoInscripciones)
         {
             AlumnoInscripcionesData.Save(alumnoInscripciones);
+        }
+
+        public void SaveAll(List<AlumnoInscripciones> alumnosInscripciones)
+        {
+            AlumnoInscripcionesData.SaveAll(alumnosInscripciones);
         }
 
         public void Delete(int ID)

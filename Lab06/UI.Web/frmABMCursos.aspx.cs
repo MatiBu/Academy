@@ -260,7 +260,7 @@ namespace UI.Web
                 {
                     foreach (Materia item in todasLasMaterias)
                     {
-                        ddlMateria.Items.Insert(item.ID, item.Descripcion);
+                        ddlMateria.Items.Add(item.Descripcion);
                     }
                 }
                 else
@@ -294,7 +294,7 @@ namespace UI.Web
                 {
                     foreach (Comision item in comisiones)
                     {
-                        ddlComision.Items.Insert(item.ID, item.Descripcion);
+                        ddlComision.Items.Add(item.Descripcion);
                     }
                 }
                 else

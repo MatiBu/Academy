@@ -48,7 +48,7 @@ namespace Business.Logic
 
         public void Insert(Usuario user)
         {
-            if (ValidateUnique(user))
+            if (!ValidateUnique(user))
             {
                 UsuarioData.Insert(user);
             }

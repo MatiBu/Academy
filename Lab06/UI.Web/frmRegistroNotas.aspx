@@ -13,15 +13,25 @@
         <br />
         <asp:Panel ID="formPanel" runat="server">
             <div id="buscar">
-                <div class="form-inline">
-                    <div class="form-group">
-                        <asp:Label ID="lblBuscar" runat="server" Text="Buscar alumnos por apellido"></asp:Label>
-                        <asp:TextBox ID="txtBuscar" class="form-control mx-2" runat="server"></asp:TextBox>
-                        <asp:Button ID="btnBuscar" runat="server" class="btn btn-default" Text="Buscar" OnClick="btnBuscar_Click" />
+                <div class="form-row">
+                    <div class="form-group col-4">
+                        <asp:Label for="DropDownList1" runat="server" Text="Carrera: "></asp:Label>
+                        <asp:DropDownList class="form-control" ID="DropDownList1" runat="server"></asp:DropDownList>
+                    </div>
+                    <div class="form-group col-4">
+                        <asp:Label for="DropDownList2" runat="server" Text="Materia: "></asp:Label>
+                        <asp:DropDownList class="form-control" ID="DropDownList2" runat="server"></asp:DropDownList>
+                    </div>
+                    <div class="form-group col-4">
+                        <asp:Label for="TextBox1" runat="server" Text="Comision: "></asp:Label>
+                        <asp:TextBox ID="TextBox1" class="form-control" runat="server"></asp:TextBox>
                     </div>
                 </div>
+                <div class="form-row">
+                    <asp:Button ID="btnBuscar" runat="server" class="btn btn-default" Text="Buscar" OnClick="btnBuscar_Click" />
+                </div>
                 <br />
-                <asp:GridView ID="grvAlumnos" runat="server" AutoGenerateColumns="False"
+                <%--<asp:GridView ID="grvAlumnos" runat="server" AutoGenerateColumns="False"
                     OnSelectedIndexChanged="grvAlumnos_SelectedIndexChanged"
                     DataKeyNames="ID" CssClass="table table-hover">
                     <Columns>
@@ -33,12 +43,15 @@
                         <asp:BoundField DataField="Plan.Descripcion" HeaderText="Plan" />
                     </Columns>
                 </asp:GridView>
-                <br />
+                <br />--%>
                 <br />
                 <asp:GridView ID="grvAlumnosInsc" runat="server" AutoGenerateColumns="False"
-                    DataKeyNames="ID" CssClass="table table-hover">
+                    DataKeyNames="ID" CssClass="table table-hover" OnRowEditing="grvAlumnosInsc_RowEditing"
+                    OnRowUpdating="grvAlumnosInsc_RowUpdating" OnRowCancelingEdit="grvAlumnosInsc_RowCancelingEdit">
                     <Columns>
-                        <asp:BoundField DataField="Curso.Materia.Descripcion" HeaderText="Materia" />
+                        <asp:CommandField ShowEditButton="True" />
+                        <asp:BoundField DataField="Alumno.Apellido" HeaderText="Apellido" ReadOnly="True" />
+                        <asp:BoundField DataField="Alumno.Nombre" HeaderText="Nombre" ReadOnly="True" />
                         <asp:BoundField DataField="Condicion" HeaderText="Condicion" />
                         <asp:BoundField DataField="Nota" HeaderText="Nota" />
                     </Columns>

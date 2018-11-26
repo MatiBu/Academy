@@ -2,6 +2,7 @@
 using Business.Logic;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
@@ -22,20 +23,17 @@ namespace UI.Web
             {
                 FormsAuthentication.RedirectToLoginPage("No está autorizado para acceder a este módulo");
             }
-        }
-
-        protected AlumnoLogic _alumnoLogic;
-        private AlumnoLogic AlumnoLogic
-        {
-            get
+            todasLasMaterias = MateriaLogic.GetAll();
+            todasLasEspecialidades = EspecialidadLogic.GetAll();
+            if (!IsPostBack)
             {
-                if (_alumnoLogic == null)
-                {
-                    _alumnoLogic = new AlumnoLogic();
-                }
-                return _alumnoLogic;
+                LlenarMaterias();
+                LlenarEspecialidad();
             }
+
         }
+        public List<Materia> todasLasMaterias;
+        public List<Especialidad> todasLasEspecialidades;
         protected AlumnoInscripcionesLogic _alumnoInscripcionesLogic;
         private AlumnoInscripcionesLogic AlumnoInscripcionesLogic
         {
@@ -48,23 +46,40 @@ namespace UI.Web
                 return _alumnoInscripcionesLogic;
             }
         }
+        protected MateriaLogic _materiaLogic;
+        private MateriaLogic MateriaLogic
+        {
+            get
+            {
+                if (_materiaLogic == null)
+                {
+                    _materiaLogic = new MateriaLogic();
+                }
+                return _materiaLogic;
+            }
+        }
+        protected EspecialidadLogic _especialidadLogic;
+        private EspecialidadLogic EspecialidadLogic
+        {
+            get
+            {
+                if (_especialidadLogic == null)
+                {
+                    _especialidadLogic = new EspecialidadLogic();
+                }
+                return _especialidadLogic;
+            }
+        }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
-            grvAlumnos.DataSource = AlumnoLogic.GetByApellido(txtBuscar.Text);
-            grvAlumnos.DataBind();
-        }
-
-        protected void grvAlumnos_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            var id = int.Parse(grvAlumnos.SelectedRow.Cells[1].Text);
-            grvAlumnosInsc.DataSource = AlumnoInscripcionesLogic.GetOneByAlumno(id);
-            grvAlumnosInsc.DataBind();
+            BindData();
+            Session["GrvAlumnosInsc"] = grvAlumnosInsc;
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-
+            AlumnoInscripcionesLogic.SaveAll((List<AlumnoInscripciones>)((GridView)Session["GrvAlumnosInsc"]).DataSource);
         }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
@@ -72,5 +87,96 @@ namespace UI.Web
             grvAlumnosInsc.DataSource = "";
         }
 
+        public void LlenarMaterias()
+        {
+            DropDownList2.Items.Add("");
+            DropDownList2.SelectedValue = "";
+            try
+            {
+                if (todasLasMaterias.Count != 0)
+                {
+                    foreach (Materia item in todasLasMaterias)
+                    {
+                        DropDownList2.Items.Add(item.Descripcion);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public void LlenarEspecialidad()
+        {
+            DropDownList1.Items.Add("");
+            DropDownList1.SelectedValue = "";
+            try
+            {
+                if (todasLasEspecialidades.Count != 0)
+                {
+                    foreach (Especialidad item in todasLasEspecialidades)
+                    {
+                        DropDownList1.Items.Add(item.Descripcion);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        protected void TaskGridView_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            grvAlumnosInsc.PageIndex = e.NewPageIndex;
+            BindData();
+        }
+
+        protected void grvAlumnosInsc_RowEditing(object sender, GridViewEditEventArgs e)
+        {
+            //Set the edit index.
+            grvAlumnosInsc.EditIndex = e.NewEditIndex;
+
+            grvAlumnosInsc.DataSource = ((GridView)Session["GrvAlumnosInsc"]).DataSource;
+            grvAlumnosInsc.DataBind();
+        }
+
+        protected void grvAlumnosInsc_RowUpdating(object sender, GridViewUpdateEventArgs e)
+        {
+
+            //Update the values.
+            GridViewRow row = grvAlumnosInsc.Rows[e.RowIndex];
+
+            List<AlumnoInscripciones> lista = (List<AlumnoInscripciones>)((GridView)Session["GrvAlumnosInsc"]).DataSource;
+
+            lista[row.DataItemIndex].Condicion = ((TextBox)(row.Cells[3].Controls[0])).Text;
+            lista[row.DataItemIndex].Nota = Int32.Parse(((TextBox)(row.Cells[4].Controls[0])).Text);
+
+            //Reset the edit index.
+            grvAlumnosInsc.EditIndex = -1;
+
+            //Bind data to the GridView control.
+            grvAlumnosInsc.DataSource = lista;
+            Session["GrvAlumnosInsc"] = grvAlumnosInsc;
+            grvAlumnosInsc.DataBind();
+        }
+
+        protected void grvAlumnosInsc_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+        {
+            //Reset the edit index.
+            grvAlumnosInsc.EditIndex = -1;
+            //Bind data to the GridView control.
+            BindData();
+            grvAlumnosInsc.EditIndex = -1;
+        }
+
+        private void BindData()
+        {
+            int selectedEspecialidad = this.todasLasEspecialidades.Find(a => a.Descripcion == DropDownList1.SelectedValue).ID;
+            int selectedMateria = this.todasLasMaterias.Find(a => a.Descripcion == DropDownList2.SelectedValue).ID;
+            grvAlumnosInsc.DataSource = AlumnoInscripcionesLogic.BuscarAlumnos(selectedEspecialidad, selectedMateria, TextBox1.Text);
+            grvAlumnosInsc.DataBind();
+        }
     }
 }
