@@ -159,16 +159,12 @@ namespace Data.Database
             {
                 this.OpenConnection();
 
-                SqlCommand cmdAlumno = new SqlCommand("UPDATE personas SET legajo = @legajo, nombre = @nombre, apellido = @apellido, email = @email, " +
-                    "direccion = @direccion, telefono = @telefono, fecha_nac = @fecha_nac, id_plan = @id_plan WHERE id_persona = @id", sqlConn);
+                SqlCommand cmdAlumno = new SqlCommand("UPDATE personas SET legajo = @legajo, nombre = @nombre, apellido = @apellido, " +
+                    "id_plan = @id_plan WHERE id_persona = @id", sqlConn);
                 cmdAlumno.Parameters.Add("@id", SqlDbType.Int).Value = alumno.ID;
                 cmdAlumno.Parameters.Add("@legajo", SqlDbType.Int).Value = alumno.Legajo;
                 cmdAlumno.Parameters.Add("@nombre", SqlDbType.VarChar, 50).Value = alumno.Nombre;
                 cmdAlumno.Parameters.Add("@apellido", SqlDbType.VarChar, 50).Value = alumno.Apellido;
-                cmdAlumno.Parameters.Add("@email", SqlDbType.VarChar, 50).Value = alumno.EMail;
-                cmdAlumno.Parameters.Add("@direccion", SqlDbType.VarChar, 50).Value = alumno.Direccion;
-                cmdAlumno.Parameters.Add("@telefono", SqlDbType.Int, 50).Value = alumno.Telefono;
-                cmdAlumno.Parameters.Add("@fecha_nac", SqlDbType.DateTime).Value = alumno.FechaNacimiento;
                 cmdAlumno.Parameters.Add("@id_plan", SqlDbType.Int, 50).Value = alumno.IDPlan;
                 cmdAlumno.ExecuteNonQuery();
             }
@@ -189,19 +185,16 @@ namespace Data.Database
             {
                 this.OpenConnection();
 
-                SqlCommand cmdSave = new SqlCommand("Insert into personas (nombre, apellido, direccion, " +
-                    "email, telefono, fecha_nac, legajo, tipo_persona, id_plan) values (@nombre, @apellido, @direccion, " +
-                    "@email, @telefono, @fecha_nac, @legajo, @tipo_alumno, @id_plan) " +
+                SqlCommand cmdSave = new SqlCommand("Insert into personas (nombre, apellido, fecha_nac, " +
+                    "legajo, tipo_persona, id_plan) values (@nombre, @apellido, @fecha_nac, " +
+                    "@legajo, @tipo_alumno, @id_plan) " +
                     "select @@identity", sqlConn);
                 cmdSave.Parameters.Add("@legajo", SqlDbType.Int).Value = alumno.Legajo;
                 cmdSave.Parameters.Add("@nombre", SqlDbType.VarChar, 50).Value = alumno.Nombre;
                 cmdSave.Parameters.Add("@apellido", SqlDbType.VarChar, 50).Value = alumno.Apellido;
-                cmdSave.Parameters.Add("@email", SqlDbType.VarChar, 50).Value = alumno.EMail;
-                cmdSave.Parameters.Add("@direccion", SqlDbType.VarChar, 50).Value = alumno.Direccion;
-                cmdSave.Parameters.Add("@telefono", SqlDbType.Int, 50).Value = alumno.Telefono;
-                cmdSave.Parameters.Add("@fecha_nac", SqlDbType.DateTime).Value = alumno.FechaNacimiento;
                 cmdSave.Parameters.Add("@tipo_alumno", SqlDbType.Int).Value = (int)TipoPersonas.Alumno;
                 cmdSave.Parameters.Add("@id_plan", SqlDbType.Int, 50).Value = alumno.IDPlan;
+                cmdSave.Parameters.Add("@fecha_nac", SqlDbType.DateTime).Value = new DateTime(2018,11,26);
                 alumno.ID = Decimal.ToInt32((decimal)cmdSave.ExecuteScalar());
             }
             catch (Exception Ex)

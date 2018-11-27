@@ -29,12 +29,10 @@
                     <Columns>
                         <asp:CommandField ShowSelectButton="True" />
                         <asp:BoundField DataField="ID" HeaderText="ID" SortExpression="ID" />
-                        <asp:BoundField DataField="NombreUsuario" HeaderText="NombreUsuario" SortExpression="NombreUsuario" />
-                        <asp:BoundField DataField="Clave" HeaderText="Clave" SortExpression="Clave" />
-                        <asp:CheckBoxField DataField="Habilitado" HeaderText="Habilitado" SortExpression="Habilitado" />
-                        <asp:BoundField DataField="Apellido" HeaderText="Apellido" SortExpression="Apellido" />
-                        <asp:BoundField DataField="EMail" HeaderText="EMail" SortExpression="EMail" />
-                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" SortExpression="Nombre" />
+                        <asp:BoundField DataField="Legajo" HeaderText="Legajo" />
+                        <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                        <asp:BoundField DataField="Apellido" HeaderText="Apellido" />
+                        <asp:BoundField DataField="Plan.Descripcion" HeaderText="Plan" />
                     </Columns>
                 </asp:GridView>
                 <br />
@@ -42,6 +40,12 @@
             </div>
         </asp:Panel>
         <div class="col-5">
+            <div class="form-group row">
+                <asp:Label class="col-5 col-form-label" ID="lblLegajo" runat="server" Text="Legajo: "></asp:Label>
+                <div class="col-7">
+                    <asp:TextBox ID="txtLegajo" class="form-control" runat="server"></asp:TextBox>
+                </div>
+            </div>
             <div class="form-group row">
                 <asp:Label class="col-5 col-form-label" ID="lblNombre" runat="server" Text="Nombre: "></asp:Label>
                 <div class="col-7">
@@ -55,33 +59,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <asp:Label class="col-5 col-form-label" ID="lblEmail" runat="server" Text="Email: "></asp:Label>
+                <asp:Label class="col-5 col-form-label" ID="lblPlan" runat="server" Text="Plan: "></asp:Label>
                 <div class="col-7">
-                    <asp:TextBox ID="txtEmail" runat="server" class="form-control"></asp:TextBox>
-                </div>
-            </div>
-            <div class="form-group row">
-                <asp:Label class="col-5 col-form-label" ID="lblHabilitado" runat="server" Text="Habilitado: "></asp:Label>
-                <div class="col-7">
-                    <asp:CheckBox ID="cbHabilitado" runat="server" class="form-control"></asp:CheckBox>
-                </div>
-            </div>
-            <div class="form-group row">
-                <asp:Label class="col-5 col-form-label" ID="lblNombreUsuario" runat="server" Text="Nombre de Usuario: "></asp:Label>
-                <div class="col-7">
-                    <asp:TextBox ID="txtNombreUsuario" runat="server" class="form-control"></asp:TextBox>
-                </div>
-            </div>
-            <div class="form-group row">
-                <asp:Label class="col-5 col-form-label" ID="lblClave" runat="server" Text="Clave: "></asp:Label>
-                <div class="col-7">
-                    <asp:TextBox ID="txtClave" runat="server" TextMode="Password" class="form-control"></asp:TextBox>
-                </div>
-            </div>
-            <div class="form-group row">
-                <asp:Label class="col-5 col-form-label" ID="lblRepetirClave" runat="server" Text="Repetir Clave: "></asp:Label>
-                <div class="col-7">
-                    <asp:TextBox ID="txtRepetirClave" runat="server" TextMode="Password" class="form-control"></asp:TextBox>
+                    <asp:DropDownList class="form-control" ID="ddlPlan" runat="server"></asp:DropDownList>
                 </div>
             </div>
             <div class="d-flex">
